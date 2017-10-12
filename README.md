@@ -17,7 +17,7 @@ Please check https://sites.google.com/view/useless-mutants/
 
 Requirements
 ----------------
- - Java 1.7
+ - Java > 1.7
  - 
 
 Getting started
@@ -36,18 +36,18 @@ Getting started
 	- `...`
 
 #### Using MuJava-AUM
-4. Change the file mujava.config to point out to...
+5. Change the file mujava.config to point out to...
     - `...`
 
-5. Execute the file ...:
+6. Execute the file ...:
     - `java ...`
 
 
 Publications
 ------------------
-* "Avoiding Useless Mutants"
+* "Avoiding Useless Mutants" - 
     Leonardo Fernandes, Márcio Ribeiro, Luiz Carvalho, Rohit Gheyi, Melina Mongiovi, André L. Santos, Ana Cavalcanti, Fabiano Ferrari, José Carlos Maldonado
-    GPCE 2017 [[link]][gpce17].
+    (GPCE 2017) [[link]][gpce17].
 
 [gpce17]: https://conf.researchr.org/event/gpce-2017/gpce-2017-gpce-2017-avoiding-useless-mutants
 
@@ -56,7 +56,7 @@ Documentation
 Detailed documentation ...
 [html documentation][htmldocs].
 
-[htmldocs]: ...
+[htmldocs]: https://github.com/Nimrod-Easy-Lab/muJava-AUM
 
 
 Directory structure
