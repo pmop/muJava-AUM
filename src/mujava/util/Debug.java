@@ -35,7 +35,8 @@ public final class Debug {
     private static int debugLevel = 0;
 
     public static void setDebugLevel( int level ) {
-	debugLevel = level;
+	//debugLevel = level;
+    	debugLevel = 2;
     }
 
     /**
@@ -69,7 +70,8 @@ public final class Debug {
 
     /** Print a boolean. */
     public static void print( boolean b ) {
-        if (debugLevel > EMPTY_LEVEL)  out.print( b );
+        if (debugLevel > EMPTY_LEVEL)  
+        	out.print( b );
     }
 
     /** Print a character. */

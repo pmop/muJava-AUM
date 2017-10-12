@@ -72,7 +72,8 @@ public class JID_Writer extends MutantCodeWriter
          String temp = mutant.getModifiers().toString()
 		               + " " + mutant.getTypeSpecifier().toString()
 		               + " " + mutant.getVariable();
-         String mutant_str = temp + p.getInitializer().toString();
+         //Leo: Adicionei o "=" que não tinha no Log.
+         String mutant_str = temp + " = " + p.getInitializer().toString(); 
 	     String log_str = temp+";";
 	     writeLog(removeNewline(mutant_str + " => " + log_str));
 
