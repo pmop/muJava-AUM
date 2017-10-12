@@ -34,9 +34,6 @@ import mujava.util.Debug;
  * @author Lin Deng
  * @version 1.0
  * 
- * Taking out aor_flag for not clear about the reason of using it.
- * Lin Deng, Aug 23
- * 
  */
 
 public class TraditionalMutantsGeneratorCLI extends TraditionalMutantsGenerator {
@@ -156,6 +153,13 @@ public class TraditionalMutantsGeneratorCLI extends TraditionalMutantsGenerator 
                   return;
                }
 
+//               if (hasOperator (traditionalOp, "AORB") )
+//               {
+//                  Debug.println("  Applying AOR-Binary ... ... ");
+//                  AOR_FLAG = true;
+//                  mutant_op = new AORB(file_env, cdecl, comp_unit);
+//                  comp_unit.accept(mutant_op);
+//               }
                if (hasOperator (traditionalOp, "AORB")  )
                {
                   Debug.println("  Applying AOR-Binary ... ... ");
