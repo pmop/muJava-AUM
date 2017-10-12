@@ -89,7 +89,7 @@ public class Util
 	/*
 	 * load config file
 	 */
-	static String loadConfig() throws IOException {
+	public static String loadConfig() throws IOException {
 		FileInputStream inputStream = new FileInputStream("mujavaCLI.config");
 
 		String input = IOUtils.toString(inputStream);
