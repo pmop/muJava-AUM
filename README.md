@@ -31,15 +31,15 @@ Getting started
     - `mvn install:install-file -Dfile=lib/tools.jar -DgroupId=com.sun  -DartifactId=tools -Dversion=1.7.0.13 -Dpackaging=jar`
     - `mvn install:install-file -Dfile=libs/openjava.jar -DgroupId=ojc.openjava  -DartifactId=ojc-openjava -Dversion=1.0 -Dpackaging=jar`
 
-3. Execute Maven:
-    - `mvn exec:java -Dexec.mainClass="mujava.gui.GenMutantsMain"`
 
 #### Using MuJava-AUM
 5. Change the file mujava.config to point out to examples/session1/ folder
     - MuJava_HOME=<full-path>/muJava-AUM/examples/session1
+6. Compile the source files from examples/session1/src/ directory
+    - `javac examples/session1/src/*.java -d examples/session1/classes/`
 
-6. Execute the file ...:
-    - `java ...`
+7. Execute the main file:
+    - `mvn exec:java -Dexec.mainClass="mujava.gui.GenMutantsMain"`
 
 
 Publications
