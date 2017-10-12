@@ -15,6 +15,7 @@
  */ 
 package mujava.op.basic;
 
+import mujava.op.util.ContextInfo;
 import mujava.op.util.TraditionalMutantCodeWriter;
 import openjava.ptree.*;
 import java.io.*;
@@ -31,6 +32,9 @@ public class AOIS_Writer extends TraditionalMutantCodeWriter
    FieldAccess original_field;
    String mutant;
 
+ //Leo: Context Info saves information about the mutant 
+   public ContextInfo contextInfo;
+   
    public AOIS_Writer( String file_name, PrintWriter out ) 
    {
       super(file_name,out);
