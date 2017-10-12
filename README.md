@@ -28,7 +28,7 @@ Getting started
 
 2. Initialize MuJava-AUM (the dependencies are in the /lib/ folder):
     - `cd MuJava-AUM`
-    - `./init.sh`
+    - `...`
 
 3. Execute Maven:
     - `mvn ...`
