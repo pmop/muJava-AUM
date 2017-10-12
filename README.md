@@ -26,18 +26,17 @@ Getting started
 1. Clone MuJava-AUM:
     - `git clone https://github.com/Nimrod-Easy-Lab/muJava-AUM.git`
 
-2. Initialize MuJava-AUM (the dependencies are in the /lib/ folder):
+2. Initialize MuJava-AUM (install the dependencies into your local maven repository):
     - `cd MuJava-AUM`
-    - `...`
+    - `mvn install:install-file -Dfile=lib/tools.jar -DgroupId=com.sun  -DartifactId=tools -Dversion=1.7.0.13 -Dpackaging=jar`
+    - `mvn install:install-file -Dfile=libs/openjava.jar -DgroupId=ojc.openjava  -DartifactId=ojc-openjava -Dversion=1.0 -Dpackaging=jar`
 
 3. Execute Maven:
-    - `mvn ...`
-4. Create a directory structure:
-	- `...`
+    - `mvn exec:java -Dexec.mainClass="mujava.gui.GenMutantsMain"`
 
 #### Using MuJava-AUM
-5. Change the file mujava.config to point out to...
-    - `...`
+5. Change the file mujava.config to point out to examples/session1/ folder
+    - MuJava_HOME=<full-path>/muJava-AUM/examples/session1
 
 6. Execute the file ...:
     - `java ...`
@@ -61,5 +60,4 @@ Detailed documentation ...
 
 Obs.
 ----------------------
-`mvn install:install-file -Dfile=lib/tools.jar -DgroupId=com.sun  -DartifactId=tools -Dversion=1.7.0.13 -Dpackaging=jar`
-`mvn install:install-file -Dfile=libs/openjava.jar -DgroupId=ojc.openjava  -DartifactId=ojc-openjava -Dversion=1.0 -Dpackaging=jar`
+
