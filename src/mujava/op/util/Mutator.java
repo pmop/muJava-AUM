@@ -17,6 +17,9 @@ package mujava.op.util;
 
 import mujava.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import openjava.mop.*;
 import openjava.ptree.*;
 
@@ -254,4 +257,32 @@ public class Mutator extends mujava.openjava.extension.VariableBinder
       }
       return true;
    }
+   
+   protected void logReduction(String operator01, String desc) {
+		logReduction(operator01, null, desc);
+	}
+
+	protected void logReduction(String operator01, String operator02, String desc) {
+		String fileName = "";
+		int count = this.num;
+		count++;
+		String f_name = MutationSystem.MUTANT_PATH + "/" + getClassName() + "_" +  count;
+		List<String> lines = new ArrayList<String>();
+		if (operator02 != null) {
+			lines.add(operator01 + ":" + operator02 + ":" + f_name + ":" + desc);
+			fileName = "duplicated";
+		} else {
+			lines.add(operator01 + ":" + f_name + ":" + desc);
+			fileName = "equivalent";
+		}
+
+		try {
+			LogReduction.logAppend(MutationSystem.MUTANT_HOME, fileName, lines);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	
 }
