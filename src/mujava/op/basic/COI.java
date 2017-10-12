@@ -15,14 +15,22 @@
  */
 package mujava.op.basic;
 
-import openjava.mop.*;
-import openjava.ptree.*;
-import sun.tools.jstat.Operator;
-
-import java.io.*;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import mujava.op.util.LogReduction;
+import openjava.mop.FileEnvironment;
+import openjava.mop.OJSystem;
+import openjava.ptree.BinaryExpression;
+import openjava.ptree.ClassDeclaration;
+import openjava.ptree.CompilationUnit;
+import openjava.ptree.Expression;
+import openjava.ptree.FieldAccess;
+import openjava.ptree.IfStatement;
+import openjava.ptree.ParseTreeException;
+import openjava.ptree.UnaryExpression;
+import openjava.ptree.Variable;
 
 /**
  * <p>

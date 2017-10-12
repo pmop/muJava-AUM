@@ -15,13 +15,19 @@
  */
 package mujava.op;
 
-import java.io.*;
-
-import com.sun.jdi.PrimitiveType;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import mujava.op.util.LogReduction;
-import openjava.mop.*;
-import openjava.ptree.*;
+import openjava.mop.FileEnvironment;
+import openjava.mop.OJSystem;
+import openjava.ptree.ClassDeclaration;
+import openjava.ptree.CompilationUnit;
+import openjava.ptree.FieldDeclaration;
+import openjava.ptree.Literal;
+import openjava.ptree.ModifierList;
+import openjava.ptree.ParseTreeException;
+import openjava.ptree.VariableInitializer;
 
 /**
  * <p>
