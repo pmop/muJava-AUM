@@ -30,7 +30,8 @@ Getting started
     - `cd MuJava-AUM`
     - `mvn install:install-file -Dfile=lib/tools.jar -DgroupId=com.sun  -DartifactId=tools -Dversion=1.7.0.13 -Dpackaging=jar`
     - `mvn install:install-file -Dfile=libs/openjava.jar -DgroupId=ojc.openjava  -DartifactId=ojc-openjava -Dversion=1.0 -Dpackaging=jar`
-    - `mvn compile`
+    
+    - `mvn compile`
 
 
 #### Using MuJava-AUM
