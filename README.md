@@ -43,6 +43,12 @@ Getting started
 7. Execute the main file:
     - `mvn exec:java -Dexec.mainClass="mujava.gui.GenMutantsMain"`
 
+#### Generating jar
+
+First, in `/home/jcarlosvf/Documents/git/muJava-AUM/src/test/resources/mutants/session`, make the folders (if not exists): classes, result, src and testset.
+
+After that, run: `mvn install`. The jar will be in *target* folder, with *jar-with-dependencies.jar* appended.
+
 
 Publications
 ------------------
