@@ -20,7 +20,7 @@ import mujava.MutationSystem;
 @SuiteClasses({AOISTest.class, SDLTest.class, CODTest.class, LOITest.class, ODLTest.class})
 public class TestSuite {
 	
-	public static final String PATH_TO_RESOURCES = "/home/leofernandesmo/workspace/mutants/mujava_clichanges/tests/mujava/op/basic/resources/";
+	public static final String PATH_TO_RESOURCES = "/home/jcarlosvf/Documents/git/muJava-AUM/src/test/resources/";
 
     @BeforeClass
     public static void setUp() {
@@ -72,12 +72,12 @@ public class TestSuite {
 	}
 
 	static void makeMujavaConfigFile(String output) throws IOException {
-		File file = new File("tests/mujava.config");
+		File file = new File("src/test/resources/mujava.config");
 		FileWriter fw = new FileWriter(file);
 		fw.write("MuJava_HOME=" + output);
 		fw.close();
 	
-		file = new File("tests/mujavaCLI.config");
+		file = new File("src/test/resources/mujavaCLI.config");
 		fw = new FileWriter(file);
 		fw.write("MuJava_HOME=" + output);
 		fw.close();
