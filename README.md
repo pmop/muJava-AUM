@@ -45,7 +45,7 @@ Getting started
 
 #### Generating jar
 
-First, in `/home/jcarlosvf/Documents/git/muJava-AUM/src/test/resources/mutants/session`, make the folders (if not exists): classes, result, src and testset.
+First, in `src/test/resources/mutants/session`, make the folders (if not exists): classes, result, src and testset.
 
 After that, run: `mvn install`. The jar will be in *target* folder, with *jar-with-dependencies.jar* appended.
 
