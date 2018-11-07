@@ -27,6 +27,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Collections;
 import java.util.Vector;
 
 /**
@@ -345,12 +346,12 @@ public class MutationSystem extends OJSystem
    /* Set up target files (stored in src folder) to be tested */
    public static Vector getNewTragetFiles()
    {
-      Vector targetFiles = new Vector();
+      Vector<String> targetFiles = new Vector<String>();
       getJavacArgForDir (MutationSystem.SRC_PATH, "", targetFiles);
       return targetFiles;
    }
 
-   protected static String getJavacArgForDir (String dir, String str, Vector targetFiles)
+   protected static String getJavacArgForDir (String dir, String str, Vector<String> targetFiles)
    {
       String result = str;
       String temp = "";
@@ -368,6 +369,9 @@ public class MutationSystem extends OJSystem
             targetFiles.add(temp.substring(MutationSystem.SRC_PATH.length()+1, temp.length()));
          }
       }
+      
+      //LEO: Ordenando a lista de arquivos para facilidar a selecao.
+      Collections.sort(targetFiles);
 
       File[] sub_dir = dirF.listFiles (new DirFileFilter());
       if (sub_dir.length == 0)    return result;
