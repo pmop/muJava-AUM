@@ -24,7 +24,7 @@ Getting started
 ----------------
 #### Setting up MuJava-AUM
 1. Clone MuJava-AUM:
-    - `git clone https://github.com/easy-software-ufal/muJava-AUM.git
+    - `git clone https://github.com/easy-software-ufal/muJava-AUM.git`
 
 2. Initialize MuJava-AUM (install the dependencies into your local maven repository):
     - `cd MuJava-AUM`
