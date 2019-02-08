@@ -17,8 +17,7 @@ Please check https://sites.google.com/view/useless-mutants/
 
 Requirements
 ----------------
- - Java > 1.7
- - 
+ - Compatible only with JDK and JRE 1.8 (Java 8)
 
 Getting started
 ----------------
