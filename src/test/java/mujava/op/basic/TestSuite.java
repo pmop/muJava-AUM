@@ -20,7 +20,7 @@ import mujava.MutationSystem;
 @SuiteClasses({AOISTest.class, SDLTest.class, CODTest.class, LOITest.class, ODLTest.class})
 public class TestSuite {
 	
-	public static final String PATH_TO_RESOURCES = "/home/jcarlosvf/Documents/git/muJava-AUM/src/test/resources/";
+	public static final String PATH_TO_RESOURCES = "src/test/resources";
 
     @BeforeClass
     public static void setUp() {

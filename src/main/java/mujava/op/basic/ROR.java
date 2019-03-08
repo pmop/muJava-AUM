@@ -18,6 +18,7 @@ package mujava.op.basic;
 import openjava.mop.*;
 import openjava.ptree.*;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.List;
 
 import mujava.op.basic.SDL.SDLMutations;
@@ -54,6 +55,21 @@ public class ROR extends Arithmetic_OP {
 	}
 
 	public void visit(BinaryExpression p) throws ParseTreeException {
+		// term = if (vArgs.length op1 0)
+		// vArgs is string or array
+		// ROR(op1) -> op2
+		// when op1 is < and op2 is !=
+		// when op1 is != and op2 is <
+		// when op1 is > and op2 is !=
+		// when op1 is != and op2 is >
+		// when op1 is == and op2 is <=
+		boolean insideIf = false;
+		ParseTreeObject parent = p.getParent();
+		if (parent instanceof IfStatement) {
+			//Inside of if
+			insideIf = true;
+		}
+
 		Expression left = p.getLeft();
 		left.accept(this);
 		Expression right = p.getRight();
@@ -63,6 +79,14 @@ public class ROR extends Arithmetic_OP {
 
 		if (isArithmeticType(p.getLeft()) && isArithmeticType(p.getRight())) {
 			// fix the fault that missed <, Lin, 050814
+//          Possible refactoring for code below.
+//			switch (op_type) {
+//				case BinaryExpression.GREATER: case BinaryExpression.GREATEREQUAL:
+//				case BinaryExpression.LESSEQUAL: case BinaryExpression.EQUAL:
+//				case BinaryExpression.NOTEQUAL: case BinaryExpression.LESS:
+//					primitiveRORMutantGen(p,op_type);
+//			}
+
 			if ((op_type == BinaryExpression.GREATER) || (op_type == BinaryExpression.GREATEREQUAL)
 					|| (op_type == BinaryExpression.LESSEQUAL) || (op_type == BinaryExpression.EQUAL)
 					|| (op_type == BinaryExpression.NOTEQUAL) || (op_type == BinaryExpression.LESS)) {
