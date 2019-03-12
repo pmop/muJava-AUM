@@ -17,6 +17,7 @@ import mujava.OpenJavaException;
 import mujava.TraditionalMutantsGenerator;
 
 public class SDLTest {
+	/*
 
 	private static List<String> mujavaLogLines;
 	private static List<String> nimrodDuplicatedLogLines;
@@ -121,4 +122,5 @@ public class SDLTest {
 			e.printStackTrace();
 		}
 	}
+	*/
 }

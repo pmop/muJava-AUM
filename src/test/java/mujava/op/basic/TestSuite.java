@@ -19,6 +19,7 @@ import mujava.MutationSystem;
 @RunWith(Suite.class)
 @SuiteClasses({AOISTest.class, SDLTest.class, CODTest.class, LOITest.class, ODLTest.class})
 public class TestSuite {
+	/*
 	
 	public static final String PATH_TO_RESOURCES = "src/test/resources";
 
@@ -110,5 +111,5 @@ public class TestSuite {
 	}
 
 	
-
+*/
 }

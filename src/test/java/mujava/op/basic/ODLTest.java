@@ -17,7 +17,7 @@ import mujava.OpenJavaException;
 import mujava.TraditionalMutantsGenerator;
 
 public class ODLTest {
-	
+/*
 	private static List<String> mujavaLogLines;
 	private static List<String> nimrodDuplicatedLogLines;
 	private static List<File> mutantsDirs;
@@ -118,5 +118,5 @@ public class ODLTest {
 			e.printStackTrace();
 		}
 	}
-
+*/
 }

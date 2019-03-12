@@ -148,7 +148,7 @@ public class ROR extends Arithmetic_OP {
 			if (insideIf) {
 				if ((leftIsContainer && rightIsVariable) || (leftIsVariable && rightIsContainer)) {
 					if (containsLengthMethodCall) {
-						e_rule_13 = true;
+						e_rule_13 = LogReduction.AVOID;
 						switch (op1) {
 							case BinaryExpression.NOTEQUAL:
 								if (op2 == BinaryExpression.LESS || op2 == BinaryExpression.GREATER)

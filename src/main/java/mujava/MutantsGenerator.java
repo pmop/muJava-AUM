@@ -46,7 +46,7 @@ public abstract class MutantsGenerator {
 	// private boolean debug = false;
 	// static int counter;
 	/** Java source file where mutation operators are applied to */
-	File original_file; // mutation�� ������ file
+	File original_file; // mutation file
 
 	/** mutation operators to apply */
 	String[] operators = null;

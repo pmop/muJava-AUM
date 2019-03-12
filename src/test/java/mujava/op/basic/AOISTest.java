@@ -18,7 +18,7 @@ import mujava.TraditionalMutantsGenerator;
 import mujava.op.util.LogReduction;
 
 public class AOISTest {
-
+/*
 	private static List<String> mujavaLogLines;
 	private static List<String> nimrodEquivalentLogLines;
 	private static List<File> mutantsDirs;
@@ -231,5 +231,5 @@ public class AOISTest {
 			e.printStackTrace();
 		}
 	}
-
+*/
 }
