@@ -161,7 +161,8 @@ public abstract class MutantsGenerator {
 	 * 
 	 * @throws OpenJavaException
 	 */
-	private void initParseTree() throws OpenJavaException {
+//	private void initParseTree() throws OpenJavaException {
+	public void initParseTree() throws OpenJavaException {
 		try {
 			// System.out.println("OJSystem.env0 :" + OJSystem.env );
 			comp_unit.accept(new TypeNameQualifier(file_env));
@@ -197,7 +198,8 @@ public abstract class MutantsGenerator {
 	 * 
 	 * @throws OpenJavaException
 	 */
-	private void generateParseTree() throws OpenJavaException {
+//	private void generateParseTree() throws OpenJavaException {
+	public void generateParseTree() throws OpenJavaException {
 		try {
 			comp_unit = parse(original_file);
 
