@@ -47,8 +47,10 @@ import java.util.Vector;
  *                 and applet.   
  *        
  * @author Yu-Seung Ma
- * @update by Nan Li May 2012 
+ * @update by Nan Li May 2012
+ * @update by Pedro Pinheiro 2019
  * @new function addURL:  classes are added to the CLASSPATH dynamically so that users do not need to set up the CLASSPATH manually any more
+ * @new introduced setJMutationStructureFromArg to allow configuration without mujava.config file
  * @version 1.0
   */
 
@@ -157,7 +159,7 @@ public class MutationSystem extends OJSystem
    
  /**
    * Return type of class.
-   * @param name of class
+   * @param class_name name of class
    * @return type of class ( types: interface, abstract, GUI, main, normal, applet )
    */
    public static int getClassType (String class_name)
@@ -562,7 +564,7 @@ public class MutationSystem extends OJSystem
 		}
 
   /** Re-setting MuJava structure for give class name <br>
-   * @param name of class (including package name) */
+   * @param whole_class_name name of class (including package name) */
    public static void setJMutationPaths(String whole_class_name)
    {
       int temp_start = whole_class_name.lastIndexOf(".") + 1;
@@ -605,6 +607,28 @@ public class MutationSystem extends OJSystem
       } catch (FileNotFoundException e1)
       {
          System.err.println("[ERROR] Can't find mujava.config file");
+         e1.printStackTrace();
+      } catch (Exception e)
+      {
+         e.printStackTrace();
+      }
+   }
+
+   public static void setJMutationStructureFromArg(String arg)
+   {
+      try
+      {
+
+         if (!(new File(arg).exists()))
+            throw new FileNotFoundException(arg + " Doesn't exists.");
+         SYSTEM_HOME = arg;
+         SRC_PATH = arg + "/src";
+         CLASS_PATH = arg + "/classes";
+         MUTANT_HOME = arg + "/result";
+         TESTSET_PATH = arg + "/testset";
+      } catch (FileNotFoundException e1)
+      {
+         System.err.println("[ERROR] Can't find " + arg);
          e1.printStackTrace();
       } catch (Exception e)
       {

@@ -1,0 +1,168 @@
+ROR_1:38:void_m_rule_applicable_gtstring_straightforward(): string.length() > 0  =>   string.length() >= 0
+ROR_2:38:void_m_rule_applicable_gtstring_straightforward(): string.length() > 0  =>   string.length() < 0
+ROR_3:38:void_m_rule_applicable_gtstring_straightforward(): string.length() > 0  =>   string.length() <= 0
+ROR_4:38:void_m_rule_applicable_gtstring_straightforward(): string.length() > 0  =>   string.length() == 0
+ROR_5:38:void_m_rule_applicable_gtstring_straightforward(): string.length() > 0  =>   string.length() != 0
+ROR_6:38:void_m_rule_applicable_gtstring_straightforward(): string.length() > 0  =>   true
+ROR_7:38:void_m_rule_applicable_gtstring_straightforward(): string.length() > 0  =>   false
+ROR_8:46:void_m_rule_applicable_gtstring_reverseorder(): 0 < string.length()  =>   0 > string.length()
+ROR_9:46:void_m_rule_applicable_gtstring_reverseorder(): 0 < string.length()  =>   0 >= string.length()
+ROR_10:46:void_m_rule_applicable_gtstring_reverseorder(): 0 < string.length()  =>   0 <= string.length()
+ROR_11:46:void_m_rule_applicable_gtstring_reverseorder(): 0 < string.length()  =>   0 == string.length()
+ROR_12:46:void_m_rule_applicable_gtstring_reverseorder(): 0 < string.length()  =>   0 != string.length()
+ROR_13:46:void_m_rule_applicable_gtstring_reverseorder(): 0 < string.length()  =>   true
+ROR_14:46:void_m_rule_applicable_gtstring_reverseorder(): 0 < string.length()  =>   false
+ROR_15:54:void_m_rule_applicable_eqstring_reverseorder(): 0 == string.length()  =>   0 > string.length()
+ROR_16:54:void_m_rule_applicable_eqstring_reverseorder(): 0 == string.length()  =>   0 >= string.length()
+ROR_17:54:void_m_rule_applicable_eqstring_reverseorder(): 0 == string.length()  =>   0 < string.length()
+ROR_18:54:void_m_rule_applicable_eqstring_reverseorder(): 0 == string.length()  =>   0 <= string.length()
+ROR_19:54:void_m_rule_applicable_eqstring_reverseorder(): 0 == string.length()  =>   0 != string.length()
+ROR_20:54:void_m_rule_applicable_eqstring_reverseorder(): 0 == string.length()  =>   true
+ROR_21:54:void_m_rule_applicable_eqstring_reverseorder(): 0 == string.length()  =>   false
+ROR_22:62:void_m_rule_applicable_eqstring_straightforward(): string.length() == 0  =>   string.length() > 0
+ROR_23:62:void_m_rule_applicable_eqstring_straightforward(): string.length() == 0  =>   string.length() >= 0
+ROR_24:62:void_m_rule_applicable_eqstring_straightforward(): string.length() == 0  =>   string.length() < 0
+ROR_25:62:void_m_rule_applicable_eqstring_straightforward(): string.length() == 0  =>   string.length() <= 0
+ROR_26:62:void_m_rule_applicable_eqstring_straightforward(): string.length() == 0  =>   string.length() != 0
+ROR_27:62:void_m_rule_applicable_eqstring_straightforward(): string.length() == 0  =>   true
+ROR_28:62:void_m_rule_applicable_eqstring_straightforward(): string.length() == 0  =>   false
+ROR_29:70:void_m_rule_not_applicable_neqstring_straightforward(): string.length() != 0  =>   string.length() > 0
+ROR_30:70:void_m_rule_not_applicable_neqstring_straightforward(): string.length() != 0  =>   string.length() >= 0
+ROR_31:70:void_m_rule_not_applicable_neqstring_straightforward(): string.length() != 0  =>   string.length() < 0
+ROR_32:70:void_m_rule_not_applicable_neqstring_straightforward(): string.length() != 0  =>   string.length() <= 0
+ROR_33:70:void_m_rule_not_applicable_neqstring_straightforward(): string.length() != 0  =>   string.length() == 0
+ROR_34:70:void_m_rule_not_applicable_neqstring_straightforward(): string.length() != 0  =>   true
+ROR_35:70:void_m_rule_not_applicable_neqstring_straightforward(): string.length() != 0  =>   false
+ROR_36:78:void_m_rule_not_applicable_neqstring_reverseorder(): 0 != string.length()  =>   0 > string.length()
+ROR_37:78:void_m_rule_not_applicable_neqstring_reverseorder(): 0 != string.length()  =>   0 >= string.length()
+ROR_38:78:void_m_rule_not_applicable_neqstring_reverseorder(): 0 != string.length()  =>   0 < string.length()
+ROR_39:78:void_m_rule_not_applicable_neqstring_reverseorder(): 0 != string.length()  =>   0 <= string.length()
+ROR_40:78:void_m_rule_not_applicable_neqstring_reverseorder(): 0 != string.length()  =>   0 == string.length()
+ROR_41:78:void_m_rule_not_applicable_neqstring_reverseorder(): 0 != string.length()  =>   true
+ROR_42:78:void_m_rule_not_applicable_neqstring_reverseorder(): 0 != string.length()  =>   false
+ROR_43:86:void_m_rule_applicable_gtarray_straightforward(): array.length > 0  =>   array.length >= 0
+ROR_44:86:void_m_rule_applicable_gtarray_straightforward(): array.length > 0  =>   array.length < 0
+ROR_45:86:void_m_rule_applicable_gtarray_straightforward(): array.length > 0  =>   array.length <= 0
+ROR_46:86:void_m_rule_applicable_gtarray_straightforward(): array.length > 0  =>   array.length == 0
+ROR_47:86:void_m_rule_applicable_gtarray_straightforward(): array.length > 0  =>   array.length != 0
+ROR_48:86:void_m_rule_applicable_gtarray_straightforward(): array.length > 0  =>   true
+ROR_49:86:void_m_rule_applicable_gtarray_straightforward(): array.length > 0  =>   false
+ROR_50:94:void_m_rule_applicable_gtarray_reverseorder(): 0 < array.length  =>   0 > array.length
+ROR_51:94:void_m_rule_applicable_gtarray_reverseorder(): 0 < array.length  =>   0 >= array.length
+ROR_52:94:void_m_rule_applicable_gtarray_reverseorder(): 0 < array.length  =>   0 <= array.length
+ROR_53:94:void_m_rule_applicable_gtarray_reverseorder(): 0 < array.length  =>   0 == array.length
+ROR_54:94:void_m_rule_applicable_gtarray_reverseorder(): 0 < array.length  =>   0 != array.length
+ROR_55:94:void_m_rule_applicable_gtarray_reverseorder(): 0 < array.length  =>   true
+ROR_56:94:void_m_rule_applicable_gtarray_reverseorder(): 0 < array.length  =>   false
+ROR_57:102:void_m_rule_applicable_eqarray_reverseorder(): 0 == array.length  =>   0 > array.length
+ROR_58:102:void_m_rule_applicable_eqarray_reverseorder(): 0 == array.length  =>   0 >= array.length
+ROR_59:102:void_m_rule_applicable_eqarray_reverseorder(): 0 == array.length  =>   0 < array.length
+ROR_60:102:void_m_rule_applicable_eqarray_reverseorder(): 0 == array.length  =>   0 <= array.length
+ROR_61:102:void_m_rule_applicable_eqarray_reverseorder(): 0 == array.length  =>   0 != array.length
+ROR_62:102:void_m_rule_applicable_eqarray_reverseorder(): 0 == array.length  =>   true
+ROR_63:102:void_m_rule_applicable_eqarray_reverseorder(): 0 == array.length  =>   false
+ROR_64:110:void_m_rule_applicable_eqarray_straightforward(): array.length == 0  =>   array.length > 0
+ROR_65:110:void_m_rule_applicable_eqarray_straightforward(): array.length == 0  =>   array.length >= 0
+ROR_66:110:void_m_rule_applicable_eqarray_straightforward(): array.length == 0  =>   array.length < 0
+ROR_67:110:void_m_rule_applicable_eqarray_straightforward(): array.length == 0  =>   array.length <= 0
+ROR_68:110:void_m_rule_applicable_eqarray_straightforward(): array.length == 0  =>   array.length != 0
+ROR_69:110:void_m_rule_applicable_eqarray_straightforward(): array.length == 0  =>   true
+ROR_70:110:void_m_rule_applicable_eqarray_straightforward(): array.length == 0  =>   false
+ROR_71:118:void_m_rule_not_applicable_neqarray_straightforward(): array.length != 0  =>   array.length > 0
+ROR_72:118:void_m_rule_not_applicable_neqarray_straightforward(): array.length != 0  =>   array.length >= 0
+ROR_73:118:void_m_rule_not_applicable_neqarray_straightforward(): array.length != 0  =>   array.length < 0
+ROR_74:118:void_m_rule_not_applicable_neqarray_straightforward(): array.length != 0  =>   array.length <= 0
+ROR_75:118:void_m_rule_not_applicable_neqarray_straightforward(): array.length != 0  =>   array.length == 0
+ROR_76:118:void_m_rule_not_applicable_neqarray_straightforward(): array.length != 0  =>   true
+ROR_77:118:void_m_rule_not_applicable_neqarray_straightforward(): array.length != 0  =>   false
+ROR_78:126:void_m_rule_not_applicable_neqarray_reverseorder(): 0 != array.length  =>   0 > array.length
+ROR_79:126:void_m_rule_not_applicable_neqarray_reverseorder(): 0 != array.length  =>   0 >= array.length
+ROR_80:126:void_m_rule_not_applicable_neqarray_reverseorder(): 0 != array.length  =>   0 < array.length
+ROR_81:126:void_m_rule_not_applicable_neqarray_reverseorder(): 0 != array.length  =>   0 <= array.length
+ROR_82:126:void_m_rule_not_applicable_neqarray_reverseorder(): 0 != array.length  =>   0 == array.length
+ROR_83:126:void_m_rule_not_applicable_neqarray_reverseorder(): 0 != array.length  =>   true
+ROR_84:126:void_m_rule_not_applicable_neqarray_reverseorder(): 0 != array.length  =>   false
+ROR_85:134:void_m_rule_not_applicable_1(): string.length() > 1  =>   string.length() >= 1
+ROR_86:134:void_m_rule_not_applicable_1(): string.length() > 1  =>   string.length() < 1
+ROR_87:134:void_m_rule_not_applicable_1(): string.length() > 1  =>   string.length() <= 1
+ROR_88:134:void_m_rule_not_applicable_1(): string.length() > 1  =>   string.length() == 1
+ROR_89:134:void_m_rule_not_applicable_1(): string.length() > 1  =>   string.length() != 1
+ROR_90:134:void_m_rule_not_applicable_1(): string.length() > 1  =>   true
+ROR_91:134:void_m_rule_not_applicable_1(): string.length() > 1  =>   false
+ROR_92:142:void_m_rule_not_applicable_2(): string.length() != 1  =>   string.length() > 1
+ROR_93:142:void_m_rule_not_applicable_2(): string.length() != 1  =>   string.length() >= 1
+ROR_94:142:void_m_rule_not_applicable_2(): string.length() != 1  =>   string.length() < 1
+ROR_95:142:void_m_rule_not_applicable_2(): string.length() != 1  =>   string.length() <= 1
+ROR_96:142:void_m_rule_not_applicable_2(): string.length() != 1  =>   string.length() == 1
+ROR_97:142:void_m_rule_not_applicable_2(): string.length() != 1  =>   true
+ROR_98:142:void_m_rule_not_applicable_2(): string.length() != 1  =>   false
+ROR_99:150:void_m_rule_not_applicable_3(): string.length() < 6  =>   string.length() > 6
+ROR_100:150:void_m_rule_not_applicable_3(): string.length() < 6  =>   string.length() >= 6
+ROR_101:150:void_m_rule_not_applicable_3(): string.length() < 6  =>   string.length() <= 6
+ROR_102:150:void_m_rule_not_applicable_3(): string.length() < 6  =>   string.length() == 6
+ROR_103:150:void_m_rule_not_applicable_3(): string.length() < 6  =>   string.length() != 6
+ROR_104:150:void_m_rule_not_applicable_3(): string.length() < 6  =>   true
+ROR_105:150:void_m_rule_not_applicable_3(): string.length() < 6  =>   false
+ROR_106:158:void_m_rule_not_applicable_4(): string.length() < 7  =>   string.length() > 7
+ROR_107:158:void_m_rule_not_applicable_4(): string.length() < 7  =>   string.length() >= 7
+ROR_108:158:void_m_rule_not_applicable_4(): string.length() < 7  =>   string.length() <= 7
+ROR_109:158:void_m_rule_not_applicable_4(): string.length() < 7  =>   string.length() == 7
+ROR_110:158:void_m_rule_not_applicable_4(): string.length() < 7  =>   string.length() != 7
+ROR_111:158:void_m_rule_not_applicable_4(): string.length() < 7  =>   true
+ROR_112:158:void_m_rule_not_applicable_4(): string.length() < 7  =>   false
+ROR_113:166:void_m_rule_not_applicable_5(): string.length() < 7  =>   string.length() > 7
+ROR_114:166:void_m_rule_not_applicable_5(): string.length() < 7  =>   string.length() >= 7
+ROR_115:166:void_m_rule_not_applicable_5(): string.length() < 7  =>   string.length() <= 7
+ROR_116:166:void_m_rule_not_applicable_5(): string.length() < 7  =>   string.length() == 7
+ROR_117:166:void_m_rule_not_applicable_5(): string.length() < 7  =>   string.length() != 7
+ROR_118:166:void_m_rule_not_applicable_5(): string.length() < 7  =>   true
+ROR_119:166:void_m_rule_not_applicable_5(): string.length() < 7  =>   false
+ROR_120:174:void_m_rule_not_applicable_6(): array.length > 1  =>   array.length >= 1
+ROR_121:174:void_m_rule_not_applicable_6(): array.length > 1  =>   array.length < 1
+ROR_122:174:void_m_rule_not_applicable_6(): array.length > 1  =>   array.length <= 1
+ROR_123:174:void_m_rule_not_applicable_6(): array.length > 1  =>   array.length == 1
+ROR_124:174:void_m_rule_not_applicable_6(): array.length > 1  =>   array.length != 1
+ROR_125:174:void_m_rule_not_applicable_6(): array.length > 1  =>   true
+ROR_126:174:void_m_rule_not_applicable_6(): array.length > 1  =>   false
+ROR_127:182:void_m_rule_not_applicable_7(): array.length != 1  =>   array.length > 1
+ROR_128:182:void_m_rule_not_applicable_7(): array.length != 1  =>   array.length >= 1
+ROR_129:182:void_m_rule_not_applicable_7(): array.length != 1  =>   array.length < 1
+ROR_130:182:void_m_rule_not_applicable_7(): array.length != 1  =>   array.length <= 1
+ROR_131:182:void_m_rule_not_applicable_7(): array.length != 1  =>   array.length == 1
+ROR_132:182:void_m_rule_not_applicable_7(): array.length != 1  =>   true
+ROR_133:182:void_m_rule_not_applicable_7(): array.length != 1  =>   false
+ROR_134:190:void_m_rule_not_applicable_8(): array.length < 6  =>   array.length > 6
+ROR_135:190:void_m_rule_not_applicable_8(): array.length < 6  =>   array.length >= 6
+ROR_136:190:void_m_rule_not_applicable_8(): array.length < 6  =>   array.length <= 6
+ROR_137:190:void_m_rule_not_applicable_8(): array.length < 6  =>   array.length == 6
+ROR_138:190:void_m_rule_not_applicable_8(): array.length < 6  =>   array.length != 6
+ROR_139:190:void_m_rule_not_applicable_8(): array.length < 6  =>   true
+ROR_140:190:void_m_rule_not_applicable_8(): array.length < 6  =>   false
+ROR_141:198:void_m_rule_not_applicable_9(): array.length < 7  =>   array.length > 7
+ROR_142:198:void_m_rule_not_applicable_9(): array.length < 7  =>   array.length >= 7
+ROR_143:198:void_m_rule_not_applicable_9(): array.length < 7  =>   array.length <= 7
+ROR_144:198:void_m_rule_not_applicable_9(): array.length < 7  =>   array.length == 7
+ROR_145:198:void_m_rule_not_applicable_9(): array.length < 7  =>   array.length != 7
+ROR_146:198:void_m_rule_not_applicable_9(): array.length < 7  =>   true
+ROR_147:198:void_m_rule_not_applicable_9(): array.length < 7  =>   false
+ROR_148:206:void_m_rule_not_applicable_10(): array.length < 7  =>   array.length > 7
+ROR_149:206:void_m_rule_not_applicable_10(): array.length < 7  =>   array.length >= 7
+ROR_150:206:void_m_rule_not_applicable_10(): array.length < 7  =>   array.length <= 7
+ROR_151:206:void_m_rule_not_applicable_10(): array.length < 7  =>   array.length == 7
+ROR_152:206:void_m_rule_not_applicable_10(): array.length < 7  =>   array.length != 7
+ROR_153:206:void_m_rule_not_applicable_10(): array.length < 7  =>   true
+ROR_154:206:void_m_rule_not_applicable_10(): array.length < 7  =>   false
+ROR_155:214:void_m_rule_not_applicable11(): gcm.length() > 0  =>   gcm.length() >= 0
+ROR_156:214:void_m_rule_not_applicable11(): gcm.length() > 0  =>   gcm.length() < 0
+ROR_157:214:void_m_rule_not_applicable11(): gcm.length() > 0  =>   gcm.length() <= 0
+ROR_158:214:void_m_rule_not_applicable11(): gcm.length() > 0  =>   gcm.length() == 0
+ROR_159:214:void_m_rule_not_applicable11(): gcm.length() > 0  =>   gcm.length() != 0
+ROR_160:214:void_m_rule_not_applicable11(): gcm.length() > 0  =>   true
+ROR_161:214:void_m_rule_not_applicable11(): gcm.length() > 0  =>   false
+ROR_162:222:void_m_rule_not_applicable12(): gcm.size() > 0  =>   gcm.size() >= 0
+ROR_163:222:void_m_rule_not_applicable12(): gcm.size() > 0  =>   gcm.size() < 0
+ROR_164:222:void_m_rule_not_applicable12(): gcm.size() > 0  =>   gcm.size() <= 0
+ROR_165:222:void_m_rule_not_applicable12(): gcm.size() > 0  =>   gcm.size() == 0
+ROR_166:222:void_m_rule_not_applicable12(): gcm.size() > 0  =>   gcm.size() != 0
+ROR_167:222:void_m_rule_not_applicable12(): gcm.size() > 0  =>   true
+ROR_168:222:void_m_rule_not_applicable12(): gcm.size() > 0  =>   false

@@ -55,35 +55,20 @@ public class ROR extends Arithmetic_OP {
 	}
 
 	public void visit(BinaryExpression p) throws ParseTreeException {
-
-
-
 		Expression left = p.getLeft();
 		left.accept(this);
 		Expression right = p.getRight();
 		right.accept(this);
 
-		if (right instanceof Variable) {
-		}
-		//if (left instanceof )
-
 		int op_type = p.getOperator();
 
 		if (isArithmeticType(p.getLeft()) && isArithmeticType(p.getRight())) {
 			// fix the fault that missed <, Lin, 050814
-//          This switch is a refactored version of the if clause below
-			switch (op_type) {
-				case BinaryExpression.GREATER: case BinaryExpression.GREATEREQUAL:
-				case BinaryExpression.LESSEQUAL: case BinaryExpression.EQUAL:
-				case BinaryExpression.NOTEQUAL: case BinaryExpression.LESS:
-					primitiveRORMutantGen(p,op_type);
+			if ((op_type == BinaryExpression.GREATER) || (op_type == BinaryExpression.GREATEREQUAL)
+					|| (op_type == BinaryExpression.LESSEQUAL) || (op_type == BinaryExpression.EQUAL)
+					|| (op_type == BinaryExpression.NOTEQUAL) || (op_type == BinaryExpression.LESS)) {
+				primitiveRORMutantGen(p, op_type);
 			}
-
-//			if ((op_type == BinaryExpression.GREATER) || (op_type == BinaryExpression.GREATEREQUAL)
-//					|| (op_type == BinaryExpression.LESSEQUAL) || (op_type == BinaryExpression.EQUAL)
-//					|| (op_type == BinaryExpression.NOTEQUAL) || (op_type == BinaryExpression.LESS)) {
-//				primitiveRORMutantGen(p, op_type);
-//			}
 		} else if ((op_type == BinaryExpression.EQUAL) || (op_type == BinaryExpression.NOTEQUAL)) {
 			objectRORMutantGen(p, op_type);
 		}
@@ -188,7 +173,8 @@ public class ROR extends Arithmetic_OP {
 		if (op != BinaryExpression.GREATER) {
 			mutant = (BinaryExpression) (exp.makeRecursiveCopy());
 			mutant.setOperator(BinaryExpression.GREATER);
-			if (!isDuplicated(exp, mutant)) {
+			int op2 = BinaryExpression.GREATER;
+			if (!isDuplicated(exp, mutant) && !isEquivalent(exp,op,op2)) {
 				outputToFile(exp, mutant);
 			}
 		}
@@ -196,7 +182,8 @@ public class ROR extends Arithmetic_OP {
 		if (op != BinaryExpression.GREATEREQUAL) {
 			mutant = (BinaryExpression) (exp.makeRecursiveCopy());
 			mutant.setOperator(BinaryExpression.GREATEREQUAL);
-			if (!isDuplicated(exp, mutant)) {
+			int op2 = BinaryExpression.GREATEREQUAL;
+			if (!isDuplicated(exp, mutant) && !isEquivalent(exp,op,op2)) {
 				outputToFile(exp, mutant);
 			}
 		}
@@ -204,7 +191,8 @@ public class ROR extends Arithmetic_OP {
 		if (op != BinaryExpression.LESS) {
 			mutant = (BinaryExpression) (exp.makeRecursiveCopy());
 			mutant.setOperator(BinaryExpression.LESS);
-			if (!isDuplicated(exp, mutant)) {
+			int op2 = BinaryExpression.LESS;
+			if (!isDuplicated(exp, mutant) && !isEquivalent(exp,op,op2)) {
 				outputToFile(exp, mutant);
 			}
 		}
@@ -212,7 +200,8 @@ public class ROR extends Arithmetic_OP {
 		if (op != BinaryExpression.LESSEQUAL) {
 			mutant = (BinaryExpression) (exp.makeRecursiveCopy());
 			mutant.setOperator(BinaryExpression.LESSEQUAL);
-			if (!isDuplicated(exp, mutant)) {
+			int op2 = BinaryExpression.LESSEQUAL;
+			if (!isDuplicated(exp, mutant) && !isEquivalent(exp,op,op2)) {
 				outputToFile(exp, mutant);
 			}
 		}
@@ -220,7 +209,8 @@ public class ROR extends Arithmetic_OP {
 		if (op != BinaryExpression.EQUAL) {
 			mutant = (BinaryExpression) (exp.makeRecursiveCopy());
 			mutant.setOperator(BinaryExpression.EQUAL);
-			if (!isDuplicated(exp, mutant)) {
+			int op2 = BinaryExpression.EQUAL;
+			if (!isDuplicated(exp, mutant) && !isEquivalent(exp,op,op2)) {
 				outputToFile(exp, mutant);
 			}
 		}
@@ -228,7 +218,8 @@ public class ROR extends Arithmetic_OP {
 		if (op != BinaryExpression.NOTEQUAL) {
 			mutant = (BinaryExpression) (exp.makeRecursiveCopy());
 			mutant.setOperator(BinaryExpression.NOTEQUAL);
-			if (!isDuplicated(exp, mutant)) {
+			int op2 = BinaryExpression.NOTEQUAL;
+			if (!isDuplicated(exp, mutant) && !isEquivalent(exp,op,op2)) {
 				outputToFile(exp, mutant);
 			}
 		}
