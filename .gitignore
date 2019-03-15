@@ -4,6 +4,9 @@
 #idea files
 .idea/
 
+#OpenJava dependency
+OpenJava/
+
 #examples
 examples/
 
