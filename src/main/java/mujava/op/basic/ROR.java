@@ -80,6 +80,7 @@ public class ROR extends Arithmetic_OP {
 	}
 
 	boolean isEquivalent(BinaryExpression exp, int op1, int op2) {
+		System.out.println("Checking if is equivalent.");
 
 		boolean e_rule_13 = false;
 
@@ -133,6 +134,7 @@ public class ROR extends Arithmetic_OP {
 			if (insideIf) {
 				if ((leftIsContainer && rightIsVariable) || (leftIsVariable && rightIsContainer)) {
 					if (containsLengthMethodCall) {
+						System.out.println("Is equivalent=yes.");
 						e_rule_13 = LogReduction.AVOID;
 						switch (op1) {
 							case BinaryExpression.NOTEQUAL:
@@ -148,6 +150,7 @@ public class ROR extends Arithmetic_OP {
 								if (op2 == BinaryExpression.LESSEQUAL)
 								break;
 							default:
+								System.out.println("Is equivalent=no.");
 								e_rule_13 = false;
 								break;
 						}
