@@ -18,7 +18,10 @@ public class RORMockMutationSystem extends AllMutantsGenerator {
 	static String[] cOP = {"ROR"};
 	public RORMockMutationSystem(File f) {
 		super(f, mm,cOP);
-
+		Debug.setDebugLevel(2);
+		String class_name = f.getName();
+		class_name = class_name.substring(0,class_name.indexOf('.'));
+		MutationSystem.CLASS_NAME = class_name;
 	}
 
 	@Override
@@ -84,7 +87,7 @@ public class RORMockMutationSystem extends AllMutantsGenerator {
 		for(int j=0; j<cdecls.size(); ++j)
 		{
 			ClassDeclaration cdecl = cdecls.get(j);
-
+			String name = cdecl.getName();
 			if (cdecl.getName().equals(MutationSystem.CLASS_NAME))
 			{
 				try

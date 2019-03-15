@@ -27,7 +27,6 @@ import java.io.*;
   */ 
 
 public final class Debug {
-
     final static int DETAILED_LEVEL = 2;
     final static int SIMPLE_LEVEL = 1;
     final static int EMPTY_LEVEL = 0;

@@ -15,6 +15,7 @@
  */
 package mujava.op.basic;
 
+import mujava.util.Debug;
 import openjava.mop.*;
 import openjava.ptree.*;
 import java.io.*;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import mujava.op.basic.SDL.SDLMutations;
 import mujava.op.util.LogReduction;
+import openjava.ptree.util.ParseTreeVisitor;
 
 /**
  * <p>
@@ -80,7 +82,33 @@ public class ROR extends Arithmetic_OP {
 	}
 
 	boolean isEquivalent(BinaryExpression exp, int op1, int op2) {
-		System.out.println("Checking if is equivalent.");
+		Debug.println("Checking if is equivalent.");
+
+		String op2_string = "";
+		switch (op2) {
+			case BinaryExpression.GREATER:
+				op2_string = ">";
+				break;
+			case BinaryExpression.GREATEREQUAL:
+				op2_string = ">=";
+				break;
+			case BinaryExpression.LESS:
+				op2_string = "<";
+				break;
+			case BinaryExpression.LESSEQUAL:
+				op2_string = "<=";
+				break;
+			case BinaryExpression.EQUAL:
+				op2_string = "==";
+				break;
+			case BinaryExpression.NOTEQUAL:
+				op2_string = "!=";
+				break;
+			default:
+				op2_string += op2;
+			break;
+		}
+		Debug.println("EXP: " + exp.toString() + ". OP2: " + op2_string);
 
 		boolean e_rule_13 = false;
 
@@ -114,28 +142,63 @@ public class ROR extends Arithmetic_OP {
 
 			if (leftIsVariable) {
 				Literal leftLiteral = (Literal) left;
+				leftLiteral.accept((ParseTreeVisitor) left);
 				containsZeroInteger = leftLiteral.getLiteralType() == 0;
-			} else if (rightIsContainer) {
+				if (containsZeroInteger) Debug.println("Contains zero and is at left: " + leftLiteral.getLiteralType());
+				else Debug.println("Left is variable but does not contains zero" + leftLiteral.getLiteralType());
+			}
+			else if (rightIsVariable) {
 				Literal rl = (Literal) right;
 				containsZeroInteger = rl.getLiteralType() == 0;
+				if (containsZeroInteger) Debug.println("Contains zero and is at right: " + rl.getLiteralType());
+				else Debug.println("Right is variable but does not contains zero: " + rl.getLiteralType());
 			}
+			else {
+				Debug.println("Neither left or right is a variable");
+			}
+
 			if (leftIsContainer) {
 				if (left instanceof MethodCall) {
 					MethodCall mc = (MethodCall) left;
-					if (mc.getName().equals("length")) containsLengthMethodCall = true;
+					if (mc.getName().equals("length")) {
+						containsLengthMethodCall = true;
+						Debug.println("left is container and contains method call.");
+					}
+					else {
+						Debug.println("left is container but contains no length method call.");
+					}
 				}
-			} else if (rightIsContainer) {
+				else {
+					Debug.println("left is not a container");
+				}
+			}
+			else {
+				Debug.println("left is not a desired container");
+			}
+			if (rightIsContainer) {
 				if (right instanceof MethodCall) {
 					MethodCall mc = (MethodCall) right;
-					if (mc.getName().equals("length") ) containsLengthMethodCall = true;
+					if (mc.getName().equals("length") ){
+						containsLengthMethodCall = true;
+						Debug.println("right is container and contains method call.");
+					}
+					else {
+						Debug.println("right is container but contains no length method call.");
+					}
 				}
+				else {
+					Debug.println("right is not a container");
+				}
+			}
+			else {
+				Debug.println("right is not a desired container");
 			}
 
 			if (insideIf) {
 				System.out.println("InsideIf: " + exp.toFlattenString());
 				if ((leftIsContainer && rightIsVariable) || (leftIsVariable && rightIsContainer)) {
 					if (containsLengthMethodCall) {
-						System.out.println("Is equivalent=yes.");
+						Debug.println("Is equivalent=yes.");
 						e_rule_13 = LogReduction.AVOID;
 						switch (op1) {
 							case BinaryExpression.NOTEQUAL:
@@ -151,12 +214,15 @@ public class ROR extends Arithmetic_OP {
 								if (op2 == BinaryExpression.LESSEQUAL)
 								break;
 							default:
-								System.out.println("Is equivalent=no.");
+								Debug.println("Is equivalent=no.");
 								e_rule_13 = false;
 								break;
 						}
 					}
 				}
+			}
+			else {
+				Debug.println("Is not inside if");
 			}
 
 		} catch (ParseTreeException e) {
