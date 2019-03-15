@@ -132,6 +132,7 @@ public class ROR extends Arithmetic_OP {
 			}
 
 			if (insideIf) {
+				System.out.println("InsideIf: " + exp.toFlattenString());
 				if ((leftIsContainer && rightIsVariable) || (leftIsVariable && rightIsContainer)) {
 					if (containsLengthMethodCall) {
 						System.out.println("Is equivalent=yes.");
