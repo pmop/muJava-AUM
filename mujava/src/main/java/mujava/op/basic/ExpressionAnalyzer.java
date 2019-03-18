@@ -1,10 +1,14 @@
 package mujava.op.basic;
 
+import openjava.mop.Environment;
+import openjava.mop.OJClass;
 import openjava.ptree.*;
+import openjava.tools.parser.ParseException;
 
 
 public class ExpressionAnalyzer {
     private BinaryExpression rootExpression;
+    private Environment environment;
     private boolean insideIf;
     private boolean insideFor;
     private boolean containsZeroLiteral;
@@ -171,6 +175,7 @@ public class ExpressionAnalyzer {
     void init() {
         rootOperator = BinaryOperator.NONE;
         rootExpression = null;
+        environment = null;
         insideIf = false;
         insideFor = false;
         containsZeroLiteral = false;
@@ -184,7 +189,7 @@ public class ExpressionAnalyzer {
         left = null;
     }
 
-    void parse() {
+    void parse() throws Exception {
         insideIf = rootExpression.getParent() instanceof IfStatement;
         insideFor = rootExpression.getParent() instanceof ForStatement;
         rootOperator = translateFromBinaryExpression(rootExpression.getOperator());
@@ -192,9 +197,17 @@ public class ExpressionAnalyzer {
         right = rootExpression.getRight();
         left = rootExpression.getLeft();
 
-        if (right instanceof Variable) {
-            Variable vright = (Variable) right;
+        OJClass ojcRight = right.getType(environment);
+        OJClass ojcLeft = left.getType(environment);
+
+        if (ojcRight.isArray() || ojcLeft.isArray()) {
+            this.containsArray = true;
         }
+
+
+//        if (ojcr.isPrimitive() && ojcr.) {
+//            this.containsArray
+//        }
 
 //        containsZeroLiteral = (right instanceof Variable) && ((Variable) right.toString() == '0' );
 
@@ -204,9 +217,10 @@ public class ExpressionAnalyzer {
         init();
     }
 
-    public ExpressionAnalyzer(BinaryExpression expression) {
+    public ExpressionAnalyzer(BinaryExpression expression, Environment environment) throws Exception {
         this();
         rootExpression = expression;
+        this.environment = environment;
         parse();
     }
 }
