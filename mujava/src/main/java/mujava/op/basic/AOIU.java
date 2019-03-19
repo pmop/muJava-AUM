@@ -214,7 +214,7 @@ public class AOIU extends Arithmetic_OP {
 			  op ∈ {==, !=}
 			}"
 		 */
-        ExpressionAnalyzer aexp = new ExpressionAnalyzer(exp);
+        ExpressionAnalyzer aexp = new ExpressionAnalyzer(exp, this.getEnvironment());
 		if (aoiuNegative && aexp.containsZeroLiteral() && aexp.isInsideIf() ) {
 			aoiu15 = LogReduction.AVOID;
 			switch (aexp.getRootOperator()) {

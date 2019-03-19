@@ -1,5 +1,6 @@
 package mujava.op.basic;
 
+import mujava.util.Debug;
 import openjava.mop.Environment;
 import openjava.mop.OJClass;
 import openjava.ptree.*;
@@ -7,7 +8,7 @@ import openjava.tools.parser.ParseException;
 
 
 public class ExpressionAnalyzer {
-    private BinaryExpression rootExpression;
+    private Expression rootExpression;
     private Environment environment;
     private boolean insideIf;
     private boolean insideFor;
@@ -15,9 +16,16 @@ public class ExpressionAnalyzer {
     private boolean containsString;
     private boolean forIteratorStartsAtZero;
     private boolean forIteratorIncrements;
+    private boolean containsArray;
+    private boolean containsLengthMethodCall;
+    private boolean containsBinaryOperator;
+    private BinaryOperator rootOperator;
+    private Expression right;
+    private Expression left;
+
 
     public BinaryExpression getRootExpression() {
-        return rootExpression;
+        return (BinaryExpression) rootExpression;
     }
 
     public boolean isInsideIf() {
@@ -28,7 +36,15 @@ public class ExpressionAnalyzer {
         return insideFor;
     }
 
-    public boolean containsZeroLiteral() {
+    public boolean setContainsZeroLiteralIfTrue(Expression exp) {
+        if (exp instanceof Literal) {
+            Literal l = (Literal) exp;
+            if (l.getLiteralType() == 0) {
+                containsZeroLiteral = true;
+            }
+        }
+        Debug.println("Contains zero literal is: " + containsZeroLiteral);
+        Debug.println("[Contains zero] expression is: " + exp.toString());
         return containsZeroLiteral;
     }
 
@@ -48,6 +64,10 @@ public class ExpressionAnalyzer {
         return containsBinaryOperator;
     }
 
+    public boolean isContainsZeroLiteral() {
+        return containsZeroLiteral;
+    }
+
     public BinaryOperator getRootOperator() {
         return rootOperator;
     }
@@ -59,20 +79,86 @@ public class ExpressionAnalyzer {
     public Expression getLeft() {
         return left;
     }
-
-    boolean containsArray;
-    boolean containsLengthMethodCall;
-    boolean containsBinaryOperator;
-    BinaryOperator rootOperator;
-    Expression right;
-    Expression left;
-
     public boolean isForIteratorStartsAtZero() {
         return forIteratorStartsAtZero;
     }
 
     public boolean isForIteratorIncrements() {
         return forIteratorIncrements;
+    }
+
+    private void setRootExpression(BinaryExpression rootExpression) {
+        this.rootExpression = rootExpression;
+        Debug.println3("Root expression was set : " + rootExpression.toString());
+    }
+
+    private void setEnvironment(Environment environment) {
+        this.environment = environment;
+        Debug.println3("Environment was set.");
+    }
+
+    private void setInsideIf(boolean insideIf) {
+        this.insideIf = insideIf;
+        Debug.println3("InsideIf: " + insideIf);
+    }
+
+    private void setInsideFor(boolean insideFor) {
+        this.insideFor = insideFor;
+        Debug.println3("InsideFor: " + insideFor);
+    }
+
+    private void setContainsZeroLiteral(boolean containsZeroLiteral) {
+        this.containsZeroLiteral = containsZeroLiteral;
+        Debug.println3("containsZeroLiteral: " + containsZeroLiteral);
+    }
+
+    private void setContainsString(boolean containsString) {
+        this.containsString = containsString;
+        Debug.println3("containsString: " + containsString);
+    }
+
+    private void setForIteratorStartsAtZero(boolean forIteratorStartsAtZero) {
+        this.forIteratorStartsAtZero = forIteratorStartsAtZero;
+        Debug.println3("forIteratorStartsAtZero: " + forIteratorStartsAtZero);
+    }
+
+    private void setForIteratorIncrements(boolean forIteratorIncrements) {
+        this.forIteratorIncrements = forIteratorIncrements;
+        Debug.println3("forIteratorIncrements: " + forIteratorIncrements);
+    }
+
+    private void setContainsArray(boolean containsArray) {
+        this.containsArray = containsArray;
+        Debug.println3("containsArray: " + containsArray);
+    }
+
+    private void setContainsLengthMethodCall(boolean containsLengthMethodCall) {
+        this.containsLengthMethodCall = containsLengthMethodCall;
+        Debug.println3("containsLengthMethodCall: " + containsLengthMethodCall);
+    }
+
+    private void setContainsBinaryOperator(boolean containsBinaryOperator) {
+        this.containsBinaryOperator = containsBinaryOperator;
+        Debug.println3("containsBinaryOperator: " + containsBinaryOperator);
+    }
+
+    private void setRootOperator(BinaryOperator rootOperator) {
+        this.rootOperator = rootOperator;
+        Debug.println3("rootOperator: " + rootOperator);
+    }
+
+    private void setRight(Expression right) {
+        this.right = right;
+        Debug.println3("right: " + right);
+    }
+
+    private void setLeft(Expression left) {
+        this.left = left;
+        Debug.println3("left: " + left);
+    }
+
+    public boolean containsZeroLiteral() {
+        return this.containsZeroLiteral;
     }
 
     public enum BinaryOperator {
@@ -189,27 +275,62 @@ public class ExpressionAnalyzer {
         left = null;
     }
 
-    void parse() throws Exception {
-        insideIf = rootExpression.getParent() instanceof IfStatement;
-        insideFor = rootExpression.getParent() instanceof ForStatement;
-        rootOperator = translateFromBinaryExpression(rootExpression.getOperator());
-
-        right = rootExpression.getRight();
-        left = rootExpression.getLeft();
-
-        OJClass ojcRight = right.getType(environment);
-        OJClass ojcLeft = left.getType(environment);
-
-        if (ojcRight.isArray() || ojcLeft.isArray()) {
-            this.containsArray = true;
+    private void setContainsMethodCallIfTrue(Expression exp) {
+        if (exp instanceof MethodCall) {
+            MethodCall c = (MethodCall) exp;
+            if (c.getName().equals("length")) {
+                containsLengthMethodCall = true;
+                Debug.println3("containsLengthMethodCall: true.");
+            }
         }
+    }
 
+    private void setForStatementProperties(ForStatement exp) {
+        Debug.println3("Expression is ForStatement: " + exp.toString());
+        setInsideFor(true);
+    }
 
-//        if (ojcr.isPrimitive() && ojcr.) {
-//            this.containsArray
-//        }
+    private void setBinaryExpressionProperties(BinaryExpression exp) {
+        Debug.println3("Expression is BinaryExpression: " + exp.toString());
+        ParseTreeObject pto = exp;
 
-//        containsZeroLiteral = (right instanceof Variable) && ((Variable) right.toString() == '0' );
+        setInsideIf(pto.getParent() instanceof IfStatement);
+        setRootOperator(translateFromBinaryExpression(exp.getOperator()));
+        setRight(exp.getRight());
+        setLeft(exp.getLeft());
+        setContainsMethodCallIfTrue(right);
+        setContainsZeroLiteralIfTrue(right);
+        setContainsMethodCallIfTrue(left);
+        setContainsZeroLiteralIfTrue(left);
+
+        try {
+            OJClass ojcRight = right.getType(environment);
+            OJClass ojcLeft = left.getType(environment);
+
+            if (ojcRight.isArray() || ojcLeft.isArray()) {
+                setContainsArray(true);
+            }
+
+            if ((ojcLeft.getClass().getName().equals("String")) ||
+                    (ojcRight.getClass().getName().equals("String")) ) {
+                setContainsString(true);
+            }
+
+        } catch (Exception e) {
+            Debug.println("Unable to parse left and right expressions from BinaryExpression: " + exp.toString());
+        }
+    }
+
+    void parse() {
+        if (rootExpression instanceof BinaryExpression) {
+            setBinaryExpressionProperties((BinaryExpression) rootExpression);
+        }
+        else if (rootExpression instanceof ForStatement) {
+            setForStatementProperties((ForStatement) rootExpression);
+        } else {
+            Debug.println3("Expression parsing not implemented for: "
+                    + rootExpression.toString());
+        }
 
     }
 
@@ -217,10 +338,13 @@ public class ExpressionAnalyzer {
         init();
     }
 
-    public ExpressionAnalyzer(BinaryExpression expression, Environment environment) throws Exception {
+    public ExpressionAnalyzer(Expression expression, Environment environment) {
         this();
         rootExpression = expression;
         this.environment = environment;
         parse();
+    }
+    public ExpressionAnalyzer(BinaryExpression expression, Environment environment) {
+        this((Expression) expression, environment);
     }
 }

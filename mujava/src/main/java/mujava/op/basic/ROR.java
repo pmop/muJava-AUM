@@ -84,32 +84,6 @@ public class ROR extends Arithmetic_OP {
 	boolean isEquivalent(BinaryExpression exp, int op1, int op2) {
 		Debug.println("Checking if is equivalent.");
 
-		String op2_string = "";
-		switch (op2) {
-			case BinaryExpression.GREATER:
-				op2_string = ">";
-				break;
-			case BinaryExpression.GREATEREQUAL:
-				op2_string = ">=";
-				break;
-			case BinaryExpression.LESS:
-				op2_string = "<";
-				break;
-			case BinaryExpression.LESSEQUAL:
-				op2_string = "<=";
-				break;
-			case BinaryExpression.EQUAL:
-				op2_string = "==";
-				break;
-			case BinaryExpression.NOTEQUAL:
-				op2_string = "!=";
-				break;
-			default:
-				op2_string += op2;
-			break;
-		}
-		Debug.println("EXP: " + exp.toString() + ". OP2: " + op2_string);
-
 		boolean e_rule_13 = false;
 		boolean e_rule_17 = false;
 
@@ -138,49 +112,60 @@ public class ROR extends Arithmetic_OP {
                There is no definition of v1 within the for body
             }
          */
-		try {
-			ExpressionAnalyzer aexp = new ExpressionAnalyzer(exp);
-			if (aexp.isInsideIf() && aexp.containsZeroLiteral() && (aexp.containsLengthMethodCall() &&
-					(aexp.containsString() || aexp.containsArray())) ) {
-			    e_rule_13 = LogReduction.AVOID;
-				switch (aexp.getRootOperator()) {
-					//TODO: look at op2
-					case DIFFERENT:
-						break;
-					case GREATER:
-						break;
-					case LESSER:
-						break;
-					case EQUALS:
-						break;
-                    default:
-                        e_rule_13 = false;
-                        break;
-				}
-			}
-			else if (aexp.isInsideFor() && aexp.isForIteratorStartsAtZero() &&
-					aexp.isForIteratorIncrements() && aexp.containsArray && aexp.containsLengthMethodCall()) {
-				//TODO: check if v1 is 'defined within for statement block' according to ROR E-Rule 17
-                switch (aexp.getRootOperator()) {
-					case LESSER:
-					    if (op2 == BinaryExpression.NOTEQUAL){
-					    	e_rule_17 = LogReduction.AVOID;
-						}
-						break;
-					case DIFFERENT:
-						if (op2 == BinaryExpression.LESS){
-							e_rule_17 = LogReduction.AVOID;
-						}
-						break;
-                    default:
-                        e_rule_17 = false;
-                        break;
-				}
+        ExpressionAnalyzer aexp = new ExpressionAnalyzer(exp, this.getEnvironment());
+        if (aexp.isInsideIf() && aexp.containsZeroLiteral() && (aexp.containsLengthMethodCall() &&
+                (aexp.containsString() || aexp.containsArray())) ) {
+            switch (aexp.getRootOperator()) {
+                //TODO: look at op2
+                case DIFFERENT:
+                    if (op2 == BinaryExpression.LESS || (op2 == BinaryExpression.GREATER)) {
+                    	e_rule_13 = LogReduction.AVOID;
+                    	Debug.println3("E-Rule 13");
+					}
+                    break;
+                case GREATER:
+					if (op2 == BinaryExpression.NOTEQUAL) {
+						e_rule_13 = LogReduction.AVOID;
+						Debug.println3("E-Rule 13");
+					}
+                    break;
+                case LESSER:
+					if (op2 == BinaryExpression.NOTEQUAL) {
+						e_rule_13 = LogReduction.AVOID;
+						Debug.println3("E-Rule 13");
+					}
+                    break;
+                case EQUALS:
+					if (op2 == BinaryExpression.LESSEQUAL) {
+						e_rule_13 = LogReduction.AVOID;
+						Debug.println3("E-Rule 13");
+					}
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (aexp.isInsideFor() && aexp.isForIteratorStartsAtZero() &&
+                aexp.isForIteratorIncrements() && aexp.containsArray() && aexp.containsLengthMethodCall()) {
+            //TODO: check if v1 is 'defined within for statement block' according to ROR E-Rule 17
+            switch (aexp.getRootOperator()) {
+                case LESSER:
+                    if (op2 == BinaryExpression.NOTEQUAL){
+                        e_rule_17 = LogReduction.AVOID;
+						Debug.println3("E-Rule 17");
+                    }
+                    break;
+                case DIFFERENT:
+                    if (op2 == BinaryExpression.LESS){
+                        e_rule_17 = LogReduction.AVOID;
+						Debug.println3("E-Rule 17");
+                    }
+                    break;
+                default:
+                    break;
+            }
 
-			}
-		} catch (ParseTreeException e) {
-			System.err.println("ParseTreeException on ROR13 E-Rule: "+e.toString());
-		}
+        }
 
 		return e_rule_13 || e_rule_17;
 	}

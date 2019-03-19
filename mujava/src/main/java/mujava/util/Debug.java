@@ -168,6 +168,9 @@ public final class Debug {
     public static void println2( String s ) {
         if (debugLevel > SIMPLE_LEVEL)  out.println( s );
     }
+    public static void println3( String s ) {
+        if (debugLevel > DETAILED_LEVEL)  out.println( s );
+    }
 
     /** Print an Object, and then finish the line. */
     public static void println( Object x ) {

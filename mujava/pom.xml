@@ -3,10 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>muJava</groupId>
 	<artifactId>muJava</artifactId>
-    <packaging>pom</packaging>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>MuJava - Avoiding Useless Mutants </name>
-	<description>MuJava version with support to avoid useless mutants</description>
+    <packaging>jar</packaging>
 	<parent>
 		<groupId>muJava-AUM</groupId>
 		<artifactId>muJava-AUM</artifactId>

@@ -16,8 +16,8 @@ import org.junit.runners.Suite.SuiteClasses;
 
 import mujava.MutationSystem;
 
-@RunWith(Suite.class)
-@SuiteClasses({AOISTest.class, SDLTest.class, CODTest.class, LOITest.class, ODLTest.class})
+//@RunWith(Suite.class)
+//@SuiteClasses({AOISTest.class, SDLTest.class, CODTest.class, LOITest.class, ODLTest.class})
 public class TestSuite {
 	/*
 	
