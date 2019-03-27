@@ -25,8 +25,7 @@ import mujava.util.*;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.net.URL;
-import java.net.URLClassLoader;
+import java.net.*;
 import java.util.Collections;
 import java.util.Vector;
 
@@ -614,26 +613,22 @@ public class MutationSystem extends OJSystem
       }
    }
 
-   public static void setJMutationStructureFromArg(String arg)
-   {
-      try
-      {
-
-         if (!(new File(arg).exists()))
-            throw new FileNotFoundException(arg + " Doesn't exists.");
-         SYSTEM_HOME = arg;
-         SRC_PATH = arg + "/src";
-         CLASS_PATH = arg + "/classes";
-         MUTANT_HOME = arg + "/result";
-         TESTSET_PATH = arg + "/testset";
-      } catch (FileNotFoundException e1)
-      {
-         System.err.println("[ERROR] Can't find " + arg);
-         e1.printStackTrace();
-      } catch (Exception e)
-      {
-         e.printStackTrace();
-      }
+   public static void setJMutationStructureFromFilePath(String path) throws FileNotFoundException {
+       if (path.length() <= 0) throw new FileNotFoundException();
+       File file_ref = new File(path);
+        if (file_ref.exists()) {
+            setJMutationStructure(path);
+        }
+        else {
+            path = MutationSystem.SYSTEM_HOME + path;
+            file_ref = new File(path);
+            if (file_ref.exists()) {
+                setJMutationStructure(path);
+            }
+            else {
+                throw  new FileNotFoundException();
+            }
+        }
    }
 
   /** <p> Recognize file structure for mutation system from not "mujava.config" but from user directly </p>*/

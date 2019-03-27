@@ -18,6 +18,11 @@ import mujava.TraditionalMutantsGenerator;
 import mujava.op.util.LogReduction;
 
 public class AOISTest {
+
+    @Test
+    public void dummy_test() {
+        Assert.assertEquals(true,true);
+    }
 /*
 	private static List<String> mujavaLogLines;
 	private static List<String> nimrodEquivalentLogLines;

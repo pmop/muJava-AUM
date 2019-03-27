@@ -17,6 +17,10 @@ import mujava.OpenJavaException;
 import mujava.TraditionalMutantsGenerator;
 
 public class SDLTest {
+    @Test
+    public void dummy_test() {
+        Assert.assertEquals(true,true);
+    }
 	/*
 
 	private static List<String> mujavaLogLines;

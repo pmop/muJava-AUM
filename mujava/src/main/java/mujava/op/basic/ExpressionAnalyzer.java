@@ -116,7 +116,19 @@ public class ExpressionAnalyzer {
     private void setContainsString(Expression exp) {
         System.out.println("\nsetContainsString >>>> " + exp);
         try {
-            OJClass ojc = (OJClass) exp;
+            OJClass ojc = null;
+            if (exp instanceof MethodCall) {
+                System.out.println("Exp is a method call so i'll check using MethodCall properties");
+                Object[] contents = ((MethodCall) exp).getContents();
+                Variable rootVariable = null;
+                if (contents != null &&  contents[0] != null) {
+                    rootVariable = (Variable) contents[0];
+                    ojc = rootVariable.getType(this.environment);
+                }
+            }
+            else {
+                ojc = exp.getType(this.environment);
+            }
             if (ojc == OJSystem.STRING) {
                 System.out.println("Is String");
                 this.containsString = true;
@@ -124,10 +136,8 @@ public class ExpressionAnalyzer {
             else {
                 System.out.println("Is not String");
             }
-        } catch (ClassCastException e) {
-            System.out.println("Cannot parse. Probably not a string");
         } catch (Exception e) {
-            System.out.println("Cannot parse. Probably not a string");
+            System.out.println("Cannot parse. Probably not a string.\nReason: " + e.getMessage());
         }
     }
 

@@ -116,29 +116,28 @@ public class ROR extends Arithmetic_OP {
         if (aexp.isInsideIf() && aexp.containsZeroLiteral() && (aexp.containsLengthMethodCall() &&
                 (aexp.containsString() || aexp.containsArray())) ) {
             switch (aexp.getRootOperator()) {
-                //TODO: look at op2
                 case DIFFERENT:
                     if (op2 == BinaryExpression.LESS || (op2 == BinaryExpression.GREATER)) {
                     	e_rule_13 = LogReduction.AVOID;
-                    	Debug.println3("E-Rule 13");
+                    	System.out.println("E-Rule 13");
 					}
                     break;
                 case GREATER:
 					if (op2 == BinaryExpression.NOTEQUAL) {
 						e_rule_13 = LogReduction.AVOID;
-						Debug.println3("E-Rule 13");
+						System.out.println("E-Rule 13");
 					}
                     break;
                 case LESSER:
 					if (op2 == BinaryExpression.NOTEQUAL) {
 						e_rule_13 = LogReduction.AVOID;
-						Debug.println3("E-Rule 13");
+						System.out.println("E-Rule 13");
 					}
                     break;
                 case EQUALS:
 					if (op2 == BinaryExpression.LESSEQUAL) {
 						e_rule_13 = LogReduction.AVOID;
-						Debug.println3("E-Rule 13");
+						System.out.println("E-Rule 13");
 					}
                     break;
                 default:
@@ -152,13 +151,13 @@ public class ROR extends Arithmetic_OP {
                 case LESSER:
                     if (op2 == BinaryExpression.NOTEQUAL){
                         e_rule_17 = LogReduction.AVOID;
-						Debug.println3("E-Rule 17");
+						System.out.println("E-Rule 17");
                     }
                     break;
                 case DIFFERENT:
                     if (op2 == BinaryExpression.LESS){
                         e_rule_17 = LogReduction.AVOID;
-						Debug.println3("E-Rule 17");
+						System.out.println("E-Rule 17");
                     }
                     break;
                 default:

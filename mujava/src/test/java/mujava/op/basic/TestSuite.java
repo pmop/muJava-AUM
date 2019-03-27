@@ -1,24 +1,15 @@
 package mujava.op.basic;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.io.FileUtils;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
-
-import mujava.MutationSystem;
+import org.junit.Test;
 
 //@RunWith(Suite.class)
 //@SuiteClasses({AOISTest.class, SDLTest.class, CODTest.class, LOITest.class, ODLTest.class})
 public class TestSuite {
+    @Test
+    private void dummy_test() {
+        Assert.assertEquals(true,true);
+    }
 	/*
 	
 	public static final String PATH_TO_RESOURCES = "src/test/resources";
