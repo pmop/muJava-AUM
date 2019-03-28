@@ -25,7 +25,7 @@ public class ExpressionAnalyzer {
     private Expression right;
     private Expression left;
 
-    public static DebugLevel DbgLevel = DebugLevel.BASIC;
+    public static DebugLevel DbgLevel = DebugLevel.NONE;
 
     private final void Debug(String str, DebugLevel level) {
         if (level.ordinal() <= DbgLevel.ordinal()) {
