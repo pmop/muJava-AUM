@@ -155,12 +155,12 @@ public class ExpressionAnalyzer {
 
     private void setForIteratorStartsAtZero(boolean forIteratorStartsAtZero) {
         this.forIteratorStartsAtZero = forIteratorStartsAtZero;
-        Debug.println3("forIteratorStartsAtZero: " + forIteratorStartsAtZero);
+        Debug("forIteratorStartsAtZero: " + forIteratorStartsAtZero, DebugLevel.DETAILED);
     }
 
     private void setForIteratorIncrements(boolean forIteratorIncrements) {
         this.forIteratorIncrements = forIteratorIncrements;
-        Debug.println3("forIteratorIncrements: " + forIteratorIncrements);
+        Debug("forIteratorIncrements: " + forIteratorIncrements, DebugLevel.DETAILED);
     }
 
     private void setContainsArray(Expression expression) {
@@ -200,12 +200,12 @@ public class ExpressionAnalyzer {
 
     private void setContainsLengthMethodCall(boolean containsLengthMethodCall) {
         this.containsLengthMethodCall = containsLengthMethodCall;
-        Debug.println3("containsLengthMethodCall: " + containsLengthMethodCall);
+        Debug("containsLengthMethodCall: " + containsLengthMethodCall, DebugLevel.DETAILED);
     }
 
     private void setContainsBinaryOperator(boolean containsBinaryOperator) {
         this.containsBinaryOperator = containsBinaryOperator;
-        Debug.println3("containsBinaryOperator: " + containsBinaryOperator);
+        Debug("containsBinaryOperator: " + containsBinaryOperator, DebugLevel.DETAILED);
     }
 
     private void setRootOperator(BinaryOperator rootOperator) {
@@ -380,7 +380,7 @@ public class ExpressionAnalyzer {
     }
 
     private void setForStatementProperties(ForStatement exp) {
-        Debug.println3("Expression is ForStatement: " + exp.toString());
+        Debug("Expression is ForStatement: " + exp.toString(), DebugLevel.DETAILED);
         setInsideFor(true);
     }
 
