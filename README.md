@@ -17,14 +17,13 @@ Please check https://sites.google.com/view/useless-mutants/
 
 Requirements
 ----------------
- - Java > 1.7
- - 
+ - Compatible only with JDK and JRE 1.8 (Java 8)
 
 Getting started
 ----------------
 #### Setting up MuJava-AUM
 1. Clone MuJava-AUM:
-    - `git clone https://github.com/Nimrod-Easy-Lab/muJava-AUM.git`
+    - `git clone https://github.com/easy-software-ufal/muJava-AUM.git`
 
 2. Initialize MuJava-AUM (install the dependencies into your local maven repository):
     - `cd MuJava-AUM`
@@ -45,7 +44,7 @@ Getting started
 
 #### Generating jar
 
-First, in `/home/jcarlosvf/Documents/git/muJava-AUM/src/test/resources/mutants/session`, make the folders (if not exists): classes, result, src and testset.
+First, in `src/test/resources/mutants/session`, make the folders (if not exists): classes, result, src and testset.
 
 After that, run: `mvn install`. The jar will be in *target* folder, with *jar-with-dependencies.jar* appended.
 
