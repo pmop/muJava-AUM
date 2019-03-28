@@ -24,6 +24,11 @@ public class ExpressionAnalyzer {
     private Expression right;
     private Expression left;
 
+    public static boolean DEBUG = true;
+
+    private final void Debug(String str) {
+        if (DEBUG) System.out.println(str);
+    }
 
     public BinaryExpression getRootExpression() {
         return (BinaryExpression) rootExpression;
@@ -38,19 +43,19 @@ public class ExpressionAnalyzer {
     }
 
     public boolean setContainsZeroLiteralIfTrue(Expression exp) {
-        Debug.println("\nsetContainsZeroLiteralIfTrue");
+        Debug("\nsetContainsZeroLiteralIfTrue >>>>> " + exp.toString() );
         if (exp instanceof Literal) {
-            Debug.println("Expression is Literal >>>> " + exp.toString());
+            Debug("Expression is Literal.");
             if (exp.toString().equals("0")) {
                 containsZeroLiteral = true;
-                Debug.println("containsZeroLiteral = true");
+                Debug("Expression is zero literal");
             }
             else {
-                Debug.println("containsZeroLiteral = false");
+                Debug("containsZeroLiteral = false");
             }
         }
         else {
-            Debug.println("Expression is not Literal");
+            Debug("Expression is not Literal");
         }
         return containsZeroLiteral;
     }
@@ -105,7 +110,7 @@ public class ExpressionAnalyzer {
 
     private void setInsideIf(boolean insideIf) {
         this.insideIf = insideIf;
-        System.out.println("\nInsideIf: " + insideIf);
+        Debug("\nInsideIf: " + insideIf);
     }
 
     private void setInsideFor(boolean insideFor) {
@@ -114,11 +119,11 @@ public class ExpressionAnalyzer {
     }
 
     private void setContainsString(Expression exp) {
-        System.out.println("\nsetContainsString >>>> " + exp);
+        Debug("\nsetContainsString >>>> " + exp);
         try {
             OJClass ojc = null;
             if (exp instanceof MethodCall) {
-                System.out.println("Exp is a method call so i'll check using MethodCall properties");
+                Debug("Exp is a method call so i'll check using MethodCall properties");
                 Object[] contents = ((MethodCall) exp).getContents();
                 Variable rootVariable = null;
                 if (contents != null &&  contents[0] != null) {
@@ -130,14 +135,14 @@ public class ExpressionAnalyzer {
                 ojc = exp.getType(this.environment);
             }
             if (ojc == OJSystem.STRING) {
-                System.out.println("Is String");
+                Debug("Is String");
                 this.containsString = true;
             }
             else {
-                System.out.println("Is not String");
+                Debug("Is not String");
             }
         } catch (Exception e) {
-            System.out.println("Cannot parse. Probably not a string.\nReason: " + e.getMessage());
+            Debug("Cannot parse. Probably not a string.\nReason: " + e.getMessage());
         }
     }
 
@@ -152,17 +157,31 @@ public class ExpressionAnalyzer {
     }
 
     private void setContainsArray(Expression expression) {
-        System.out.println("\nsetContainsArray >>>> " + expression.toString());
+        Debug("\nsetContainsArray >>>> " + expression.toString());
         try {
-            OJClass ojc = expression.getType(environment);
+            OJClass ojc = null;
+            if (expression instanceof MethodCall) {
+                Debug("Expression is a method call so i'll check using MethodCall properties");
+                Object[] contents = ((MethodCall) exp).getContents();
+                Variable rootVariable = null;
+                if (contents != null &&  contents[0] != null) {
+                    rootVariable = (Variable) contents[0];
+                    ojc = rootVariable.getType(this.environment);
+                }
+            }
+            else {
+                ojc = expression.getType(environment);
+            }
             if (ojc.isArray()) {
                 this.containsArray = true;
-                System.out.println("Is array");
-            } else {
-                System.out.println("Is not array");
+                Debug("Is array");
             }
-        } catch (Exception e) {
-            System.out.println("Cannot parse expression.");
+            else {
+                Debug("Is not array");
+            }
+        }
+        catch (Exception e) {
+            Debug("Cannot parse expression. Probably not a string.\nReason: " + e.getMessage());
         }
     }
 
@@ -182,12 +201,12 @@ public class ExpressionAnalyzer {
 
     private void setRight(Expression right) {
         this.right = right;
-        System.out.println("right: " + right);
+        Debug("right: " + right);
     }
 
     private void setLeft(Expression left) {
         this.left = left;
-        System.out.println("left: " + left);
+        Debug("left: " + left);
     }
 
     public boolean containsZeroLiteral() {
@@ -309,20 +328,20 @@ public class ExpressionAnalyzer {
     }
 
     private void setContainsMethodCallIfTrue(Expression exp) {
-        System.out.println("\nsetContainsMethodCallIfTrue");
+        Debug("\nsetContainsMethodCallIfTrue");
         if (exp instanceof MethodCall) {
             MethodCall c = (MethodCall) exp;
-            System.out.println("Is a method call. >>>> " + exp.toString());
+            Debug("Is a method call. >>>> " + exp.toString());
             if (c.getName().equals("length")) {
                 containsLengthMethodCall = true;
-                System.out.println("Is length method call.");
+                Debug("Is length method call.");
             }
             else {
-                System.out.println("Is not length method call. >>>> " + c.getName());
+                Debug("Is not length method call. >>>> " + c.getName());
             }
         }
         else {
-            System.out.println("Not a method call. >>>> " + exp.toString());
+            Debug("Not a method call. >>>> " + exp.toString());
         }
     }
 
@@ -351,14 +370,14 @@ public class ExpressionAnalyzer {
 
     void parse() {
         if (rootExpression instanceof BinaryExpression) {
-            System.out.println("Parsing as BinaryExpression");
+            Debug("Parsing as BinaryExpression");
             setBinaryExpressionProperties((BinaryExpression) rootExpression);
         }
         else if (rootExpression instanceof ForStatement) {
-            System.out.println("Parsing as ForStatement");
+            Debug("Parsing as ForStatement");
             setForStatementProperties((ForStatement) rootExpression);
         } else {
-            System.out.println("Expression parsing not implemented for: ");
+            Debug("Expression parsing not implemented for: ");
         }
 
     }
@@ -371,7 +390,7 @@ public class ExpressionAnalyzer {
         this();
         rootExpression = expression;
         this.environment = environment;
-        System.out.println("\nAnalyzing expression: " + expression.toString());
+        Debug("\nAnalyzing expression: " + expression.toString());
         parse();
     }
     public ExpressionAnalyzer(BinaryExpression expression, Environment environment) {
