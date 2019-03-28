@@ -3,7 +3,9 @@ package mujava.gui;
 import mujava.AllMutantsGenerator;
 import mujava.MutationSystem;
 import mujava.TraditionalMutantsGenerator;
+import mujava.op.basic.ExpressionAnalyzer;
 import mujava.util.Debug;
+import openjava.ptree.Expression;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,16 +15,17 @@ import java.util.List;
 
 public class DummyExecution {
 	public static void main(String[] args) {
-	    String FILEPATH = "/home/pedro/Documents/Shared/GitHub/muJava-AUM/mujava/examples/session3";
+	    String FILEPATH = "/home/pedro/Documents/Shared/GitHub/muJava-AUM/mujava/examples/session4";
 		try {
 			Debug.setDebugLevel(Debug.DETAILED_LEVEL);
+			ExpressionAnalyzer.DbgLevel = ExpressionAnalyzer.DebugLevel.BASIC;
 			MutationSystem.setJMutationStructureFromFilePath(FILEPATH);
 			MutationSystem.recordInheritanceRelation();
 			MutationSystem.ORIGINAL_PATH = "/home/pedro/Documents/Shared/GitHub/muJava-AUM/mujava/examples" +
-					"/session3/result/ERule13Example/original";
+					"/session4/result/ERule13Example/original";
 			MutationSystem.CLASS_NAME = "ERule13Example";
 			MutationSystem.TRADITIONAL_MUTANT_PATH = "/home/pedro/Documents/Shared/GitHub/muJava-AUM/mujava/" +
-					"examples/session3/result/ERule13Example/traditional_mutants";
+					"examples/session4/result/ERule13Example/traditional_mutants";
 
 			File original = new File(FILEPATH + "/src/ERule13Example.java");
 			ArrayList<String> selected = new ArrayList<>();

@@ -119,25 +119,25 @@ public class ROR extends Arithmetic_OP {
                 case DIFFERENT:
                     if (op2 == BinaryExpression.LESS || (op2 == BinaryExpression.GREATER)) {
                     	e_rule_13 = LogReduction.AVOID;
-                    	System.out.println("E-Rule 13");
+                    	System.out.println("E-Rule 13 >>>> " + exp.toString() + " op2: " + ExpressionAnalyzer.translateFromBinaryExpression(op2));
 					}
                     break;
                 case GREATER:
 					if (op2 == BinaryExpression.NOTEQUAL) {
 						e_rule_13 = LogReduction.AVOID;
-						System.out.println("E-Rule 13");
+						System.out.println("E-Rule 13 >>>> " + exp.toString() + " op2: " + ExpressionAnalyzer.translateFromBinaryExpression(op2));
 					}
                     break;
                 case LESSER:
 					if (op2 == BinaryExpression.NOTEQUAL) {
 						e_rule_13 = LogReduction.AVOID;
-						System.out.println("E-Rule 13");
+						System.out.println("E-Rule 13 >>>> " + exp.toString() + " op2: " + ExpressionAnalyzer.translateFromBinaryExpression(op2));
 					}
                     break;
                 case EQUALS:
 					if (op2 == BinaryExpression.LESSEQUAL) {
 						e_rule_13 = LogReduction.AVOID;
-						System.out.println("E-Rule 13");
+						System.out.println("E-Rule 13 >>>> " + exp.toString() + " op2: " + ExpressionAnalyzer.translateFromBinaryExpression(op2));
 					}
                     break;
                 default:
@@ -151,13 +151,13 @@ public class ROR extends Arithmetic_OP {
                 case LESSER:
                     if (op2 == BinaryExpression.NOTEQUAL){
                         e_rule_17 = LogReduction.AVOID;
-						System.out.println("E-Rule 17");
+						System.out.println("E-Rule 17 >>>> " + exp.toString());
                     }
                     break;
                 case DIFFERENT:
                     if (op2 == BinaryExpression.LESS){
                         e_rule_17 = LogReduction.AVOID;
-						System.out.println("E-Rule 17");
+						System.out.println("E-Rule 17 >>>> " + exp.toString());
                     }
                     break;
                 default:

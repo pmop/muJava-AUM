@@ -19,15 +19,18 @@ public class ExpressionAnalyzer {
     private boolean forIteratorIncrements;
     private boolean containsArray;
     private boolean containsLengthMethodCall;
+    private boolean containsMethodCall;
     private boolean containsBinaryOperator;
     private BinaryOperator rootOperator;
     private Expression right;
     private Expression left;
 
-    public static boolean DEBUG = true;
+    public static DebugLevel DbgLevel = DebugLevel.BASIC;
 
-    private final void Debug(String str) {
-        if (DEBUG) System.out.println(str);
+    private final void Debug(String str, DebugLevel level) {
+        if (level.ordinal() <= DbgLevel.ordinal()) {
+            System.out.println(str);
+        }
     }
 
     public BinaryExpression getRootExpression() {
@@ -42,20 +45,24 @@ public class ExpressionAnalyzer {
         return insideFor;
     }
 
+    public boolean containsMethodCall() {
+        return containsMethodCall;
+    }
+
     public boolean setContainsZeroLiteralIfTrue(Expression exp) {
-        Debug("\nsetContainsZeroLiteralIfTrue >>>>> " + exp.toString() );
+        Debug("\nsetContainsZeroLiteralIfTrue >>>>> " + exp.toString(), DebugLevel.BASIC);
         if (exp instanceof Literal) {
-            Debug("Expression is Literal.");
+            Debug("Expression is Literal.", DebugLevel.DETAILED);
             if (exp.toString().equals("0")) {
                 containsZeroLiteral = true;
-                Debug("Expression is zero literal");
+                Debug("Expression is zero literal", DebugLevel.DETAILED);
             }
             else {
-                Debug("containsZeroLiteral = false");
+                Debug("containsZeroLiteral = false", DebugLevel.DETAILED);
             }
         }
         else {
-            Debug("Expression is not Literal");
+            Debug("Expression is not Literal", DebugLevel.DETAILED);
         }
         return containsZeroLiteral;
     }
@@ -105,25 +112,25 @@ public class ExpressionAnalyzer {
 
     private void setEnvironment(Environment environment) {
         this.environment = environment;
-        Debug.println3("Environment was set.");
+        Debug("Environment was set.", DebugLevel.DETAILED);
     }
 
     private void setInsideIf(boolean insideIf) {
         this.insideIf = insideIf;
-        Debug("\nInsideIf: " + insideIf);
+        Debug("\nInsideIf: " + insideIf, DebugLevel.BASIC);
     }
 
     private void setInsideFor(boolean insideFor) {
         this.insideFor = insideFor;
-        Debug.println3("\nInsideFor: " + insideFor);
+        Debug("\nInsideFor: " + insideFor, DebugLevel.BASIC);
     }
 
     private void setContainsString(Expression exp) {
-        Debug("\nsetContainsString >>>> " + exp);
+        Debug("\nsetContainsString >>>> " + exp, DebugLevel.BASIC);
         try {
             OJClass ojc = null;
             if (exp instanceof MethodCall) {
-                Debug("Exp is a method call so i'll check using MethodCall properties");
+                Debug("Exp is a method call so i'll check using MethodCall properties", DebugLevel.DETAILED);
                 Object[] contents = ((MethodCall) exp).getContents();
                 Variable rootVariable = null;
                 if (contents != null &&  contents[0] != null) {
@@ -135,14 +142,14 @@ public class ExpressionAnalyzer {
                 ojc = exp.getType(this.environment);
             }
             if (ojc == OJSystem.STRING) {
-                Debug("Is String");
+                Debug("Is String", DebugLevel.BASIC);
                 this.containsString = true;
             }
             else {
-                Debug("Is not String");
+                Debug("Is not String", DebugLevel.DETAILED);
             }
         } catch (Exception e) {
-            Debug("Cannot parse. Probably not a string.\nReason: " + e.getMessage());
+            Debug("Cannot parse. Probably not a string.\nReason: " + e.getMessage(), DebugLevel.DETAILED);
         }
     }
 
@@ -157,15 +164,21 @@ public class ExpressionAnalyzer {
     }
 
     private void setContainsArray(Expression expression) {
-        Debug("\nsetContainsArray >>>> " + expression.toString());
+        Debug("\nsetContainsArray >>>> " + expression.toString(), DebugLevel.BASIC);
         try {
             OJClass ojc = null;
             if (expression instanceof MethodCall) {
-                Debug("Expression is a method call so i'll check using MethodCall properties");
-                Object[] contents = ((MethodCall) exp).getContents();
+                Debug("Expression is a method call so i'll check using MethodCall properties", DebugLevel.DETAILED);
+                Object[] contents = ((MethodCall) expression).getContents();
                 Variable rootVariable = null;
                 if (contents != null &&  contents[0] != null) {
                     rootVariable = (Variable) contents[0];
+                    ojc = rootVariable.getType(this.environment);
+                }
+            } else if (expression instanceof FieldAccess) {
+                Object[] contents = ((FieldAccess) expression).getContents();
+                if (contents != null && contents[0] != null) {
+                    Variable rootVariable = (Variable) contents[0];
                     ojc = rootVariable.getType(this.environment);
                 }
             }
@@ -174,14 +187,14 @@ public class ExpressionAnalyzer {
             }
             if (ojc.isArray()) {
                 this.containsArray = true;
-                Debug("Is array");
+                Debug("Is array", DebugLevel.BASIC);
             }
             else {
-                Debug("Is not array");
+                Debug("Is not array", DebugLevel.DETAILED);
             }
         }
         catch (Exception e) {
-            Debug("Cannot parse expression. Probably not a string.\nReason: " + e.getMessage());
+            Debug("Cannot parse expression. Probably not a string.\nReason: " + e.getMessage(), DebugLevel.DETAILED);
         }
     }
 
@@ -201,16 +214,22 @@ public class ExpressionAnalyzer {
 
     private void setRight(Expression right) {
         this.right = right;
-        Debug("right: " + right);
+        Debug("right: " + right, DebugLevel.BASIC);
     }
 
     private void setLeft(Expression left) {
         this.left = left;
-        Debug("left: " + left);
+        Debug("left: " + left, DebugLevel.BASIC);
     }
 
     public boolean containsZeroLiteral() {
         return this.containsZeroLiteral;
+    }
+
+    public enum DebugLevel {
+        NONE,
+        BASIC,
+        DETAILED
     }
 
     public enum BinaryOperator {
@@ -276,7 +295,7 @@ public class ExpressionAnalyzer {
         }
     }
 
-    BinaryOperator translateFromBinaryExpression(int binaryExpressionOperator) {
+    public static BinaryOperator translateFromBinaryExpression(int binaryExpressionOperator) {
         BinaryOperator op;
         switch (binaryExpressionOperator) {
             case BinaryExpression.PLUS:
@@ -320,6 +339,7 @@ public class ExpressionAnalyzer {
         containsString = false;
         containsArray = false;
         containsLengthMethodCall = false;
+        containsMethodCall = false;
         containsBinaryOperator = false;
         forIteratorIncrements = false;
         forIteratorStartsAtZero = false;
@@ -328,20 +348,34 @@ public class ExpressionAnalyzer {
     }
 
     private void setContainsMethodCallIfTrue(Expression exp) {
-        Debug("\nsetContainsMethodCallIfTrue");
+        Debug("\nsetContainsMethodCallIfTrue >>>> " + exp.toString(), DebugLevel.BASIC);
         if (exp instanceof MethodCall) {
+            containsMethodCall = true;
             MethodCall c = (MethodCall) exp;
-            Debug("Is a method call. >>>> " + exp.toString());
+            Debug("Is a method call.", DebugLevel.DETAILED);
             if (c.getName().equals("length")) {
                 containsLengthMethodCall = true;
-                Debug("Is length method call.");
+                Debug("Is length method call.", DebugLevel.BASIC);
             }
             else {
-                Debug("Is not length method call. >>>> " + c.getName());
+                Debug("Is not length method call. >>>> " + c.getName(), DebugLevel.DETAILED);
+            }
+        }
+        else if (exp instanceof FieldAccess) {
+            //TODO: Maybe it is more apropiate to set as FieldAccess
+            containsMethodCall = true;
+            FieldAccess c = (FieldAccess) exp;
+            Debug("Is a method call.", DebugLevel.DETAILED);
+            if (c.getName().equals("length")) {
+                containsLengthMethodCall = true;
+                Debug("True.", DebugLevel.BASIC);
+            }
+            else {
+                Debug("False.", DebugLevel.DETAILED);
             }
         }
         else {
-            Debug("Not a method call. >>>> " + exp.toString());
+            Debug("Not a method call.", DebugLevel.DETAILED);
         }
     }
 
@@ -370,14 +404,14 @@ public class ExpressionAnalyzer {
 
     void parse() {
         if (rootExpression instanceof BinaryExpression) {
-            Debug("Parsing as BinaryExpression");
+            Debug("Parsing as BinaryExpression", DebugLevel.BASIC);
             setBinaryExpressionProperties((BinaryExpression) rootExpression);
         }
         else if (rootExpression instanceof ForStatement) {
-            Debug("Parsing as ForStatement");
+            Debug("Parsing as ForStatement", DebugLevel.BASIC);
             setForStatementProperties((ForStatement) rootExpression);
         } else {
-            Debug("Expression parsing not implemented for: ");
+            Debug("Expression parsing not implemented for: ", DebugLevel.BASIC);
         }
 
     }
@@ -390,7 +424,7 @@ public class ExpressionAnalyzer {
         this();
         rootExpression = expression;
         this.environment = environment;
-        Debug("\nAnalyzing expression: " + expression.toString());
+        Debug("\nAnalyzing expression: " + expression.toString(), DebugLevel.BASIC);
         parse();
     }
     public ExpressionAnalyzer(BinaryExpression expression, Environment environment) {

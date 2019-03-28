@@ -10,5 +10,8 @@
         <module name="ojc-openjava" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="OpenJava" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>
