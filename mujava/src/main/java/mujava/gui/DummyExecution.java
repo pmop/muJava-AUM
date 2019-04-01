@@ -15,17 +15,18 @@ import java.util.List;
 
 public class DummyExecution {
 	public static void main(String[] args) {
-	    String FILEPATH = "/home/pedro/Documents/Shared/GitHub/muJava-AUM/mujava/examples/session4";
+	    String session = "/session2";
+	    String FILEPATH = "/home/pedro/Documents/Shared/GitHub/muJava-AUM/mujava/examples" + session;
 		try {
 			Debug.setDebugLevel(Debug.DETAILED_LEVEL);
 			ExpressionAnalyzer.DbgLevel = ExpressionAnalyzer.DebugLevel.BASIC;
 			MutationSystem.setJMutationStructureFromFilePath(FILEPATH);
 			MutationSystem.recordInheritanceRelation();
-			MutationSystem.ORIGINAL_PATH = "/home/pedro/Documents/Shared/GitHub/muJava-AUM/mujava/examples" +
-					"/session4/result/ERule13Example/original";
+			MutationSystem.ORIGINAL_PATH = "/home/pedro/Documents/Shared/GitHub/muJava-AUM/mujava/examples" + session +
+					"/result/ERule13Example/original";
 			MutationSystem.CLASS_NAME = "ERule13Example";
 			MutationSystem.TRADITIONAL_MUTANT_PATH = "/home/pedro/Documents/Shared/GitHub/muJava-AUM/mujava/" +
-					"examples/session4/result/ERule13Example/traditional_mutants";
+					"examples" + session + "/result/ERule13Example/traditional_mutants";
 
 			File original = new File(FILEPATH + "/src/ERule13Example.java");
 			ArrayList<String> selected = new ArrayList<>();
