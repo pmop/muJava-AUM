@@ -156,11 +156,13 @@ public class ExpressionAnalyzer {
     private void setForIteratorStartsAtZero(boolean forIteratorStartsAtZero) {
         this.forIteratorStartsAtZero = forIteratorStartsAtZero;
         Debug("forIteratorStartsAtZero: " + forIteratorStartsAtZero, DebugLevel.DETAILED);
+
     }
 
     private void setForIteratorIncrements(boolean forIteratorIncrements) {
         this.forIteratorIncrements = forIteratorIncrements;
         Debug("forIteratorIncrements: " + forIteratorIncrements, DebugLevel.DETAILED);
+
     }
 
     private void setContainsArray(Expression expression) {

@@ -25,27 +25,7 @@ import java.util.Stack;
 import mujava.op.util.ContextInfo;
 import mujava.op.util.LogReduction;
 import openjava.mop.FileEnvironment;
-import openjava.ptree.AssignmentExpression;
-import openjava.ptree.BinaryExpression;
-import openjava.ptree.ClassDeclaration;
-import openjava.ptree.CompilationUnit;
-import openjava.ptree.DoWhileStatement;
-import openjava.ptree.Expression;
-import openjava.ptree.FieldAccess;
-import openjava.ptree.ForStatement;
-import openjava.ptree.List;
-import openjava.ptree.MethodDeclaration;
-import openjava.ptree.NonLeaf;
-import openjava.ptree.Parameter;
-import openjava.ptree.ParameterList;
-import openjava.ptree.ParseTreeException;
-import openjava.ptree.ReturnStatement;
-import openjava.ptree.Statement;
-import openjava.ptree.StatementList;
-import openjava.ptree.UnaryExpression;
-import openjava.ptree.Variable;
-import openjava.ptree.VariableDeclaration;
-import openjava.ptree.WhileStatement;
+import openjava.ptree.*;
 
 /**
  * <p>
@@ -347,7 +327,7 @@ public class AOIS extends Arithmetic_OP {
 	/**
 	 * Avoid generate equivalent mutants
 	 * 
-	 * @param exp(original)
+	 * @param original
 	 * @param mutant
 	 * @param mutation
 	 * @return
@@ -357,6 +337,8 @@ public class AOIS extends Arithmetic_OP {
 		// No need to generate post-increment/decrement
 
 		Expression e;
+
+
 		if (original instanceof Variable) {
 			if (isInsideAReturnStatement) {
 				if (mutation == AOISMutations.POSINCREMENT_INSERTION
@@ -378,6 +360,7 @@ public class AOIS extends Arithmetic_OP {
 					}
 				}
 			}
+
 			// #Rule 2: Is correct applying mutation operator in ThrowStatement?
 			// if(isInsideAThrowStatement){
 			// return true;
@@ -390,8 +373,8 @@ public class AOIS extends Arithmetic_OP {
 	/**
 	 * Avoid generate duplicated mutants
 	 * 
-	 * @param statementList
-	 * @param mutation
+	 * @param original
+	 * @param mutant
 	 * @return
 	 * @throws ParseTreeException
 	 */

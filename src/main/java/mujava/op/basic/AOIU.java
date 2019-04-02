@@ -15,9 +15,13 @@
  */
 package mujava.op.basic;
 
+import mujava.op.util.LogReduction;
 import openjava.mop.*;
 import openjava.ptree.*;
 import java.io.*;
+
+import static mujava.op.basic.ExpressionAnalyzer.BinaryOperator.DIFFERENT;
+import static mujava.op.basic.ExpressionAnalyzer.BinaryOperator.EQUALS;
 
 /**
  * <p>
@@ -47,7 +51,7 @@ public class AOIU extends Arithmetic_OP {
 	/**
 	 * Set an AOR flag
 	 * 
-	 * @param b
+	 * @param p
 	 */
 	// public void setAORflag(boolean b)
 	// {
@@ -115,9 +119,10 @@ public class AOIU extends Arithmetic_OP {
 		// Lin added to generate mutants for logical expressions
 		// e.g.
 		// a < b  => -a < b
-		else if ((p.getOperator() == BinaryExpression.GREATER) || (p.getOperator() == BinaryExpression.GREATEREQUAL)
+		else if (((p.getOperator() == BinaryExpression.GREATER) || (p.getOperator() == BinaryExpression.GREATEREQUAL)
 				|| (p.getOperator() == BinaryExpression.LESSEQUAL) || (p.getOperator() == BinaryExpression.EQUAL)
-				|| (p.getOperator() == BinaryExpression.NOTEQUAL) || (p.getOperator() == BinaryExpression.LESS)) {
+				|| (p.getOperator() == BinaryExpression.NOTEQUAL) || (p.getOperator() == BinaryExpression.LESS))
+				&& !isEquivalent(p)) {
 			Expression e1 = p.getLeft();
 			Expression e2 = p.getRight();
 				super.visit(e1);
@@ -197,4 +202,33 @@ public class AOIU extends Arithmetic_OP {
 			e.printStackTrace();
 		}
 	}
+
+	boolean isEquivalent(BinaryExpression exp) {
+		boolean aoiu15 = false;
+		/*
+		AOIU 15
+		"term = if(exp op 0){...}
+			transformations = {
+			  AOIU(exp) = -exp
+			}
+			constraints = {
+			  op ∈ {==, !=}
+			}"
+		 */
+        ExpressionAnalyzer aexp = new ExpressionAnalyzer(exp, this.getEnvironment());
+		if (aexp.containsZeroLiteral() && aexp.isInsideIf()) {
+			aoiu15 = LogReduction.AVOID;
+			switch (aexp.getRootOperator()) {
+				case EQUALS:
+				case DIFFERENT:
+					System.out.println("AOIU E15 >>>> " + exp.toFlattenString());
+					break;
+				default:
+                    aoiu15 = false;
+                    break;
+			}
+		}
+		return aoiu15;
+	}
+
 }
