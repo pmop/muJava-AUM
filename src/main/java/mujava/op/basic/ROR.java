@@ -82,6 +82,7 @@ public class ROR extends Arithmetic_OP {
 		boolean e_rule_13 = false;
 		boolean e_rule_17 = false;
 		boolean e_rule_20 = false;
+		boolean e_rule_23 = false;
 
 		/*
 			ROR E-Rule 13
@@ -168,6 +169,48 @@ public class ROR extends Arithmetic_OP {
 					}
 				}
 			}
+
+			/* ROR E-Rule 23
+                "term = if (v op1 value) { ... };
+                transformations = {
+                  ROR(op1) = op2
+                }
+                constraints = {
+                   value == Integer.MAX_VALUE and op1 ∈ {==} and op2 ∈ {>=} or
+                   value == Integer.MIN_VALUE and op1 ∈ {==} and op2 ∈ {<=}
+                }"
+			 */
+			else if (((aexp.getRight() instanceof Variable) && (aexp.getLeft() instanceof FieldAccess)) ||
+                        ((aexp.getRight() instanceof FieldAccess) && (aexp.getLeft() instanceof Variable))) {
+				Variable variable = null;
+				FieldAccess fieldAccess = null;
+				if (aexp.getLeft() instanceof Variable) {
+				    variable = (Variable) aexp.getLeft();
+				} else if (aexp.getLeft() instanceof FieldAccess) {
+					fieldAccess = (FieldAccess) aexp.getLeft();
+				}
+                if (aexp.getRight() instanceof Variable) {
+				    variable = (Variable) aexp.getRight();
+				} else if (aexp.getRight() instanceof FieldAccess) {
+					fieldAccess = (FieldAccess) aexp.getRight();
+				}
+
+				if ((variable != null) && (fieldAccess != null)) {
+					if (fieldAccess.getReferenceType() != null ) {
+						if (fieldAccess.getReferenceType().getName().equals("Integer")) {
+							if (fieldAccess.getName().equals("MAX_VALUE")) {
+								if (((op1 == BinaryExpression.EQUAL) && (op2 == BinaryExpression.GREATEREQUAL)) ||
+										((op1 == BinaryExpression.EQUAL) && (op2 == BinaryExpression.LESSEQUAL))) {
+									e_rule_23 = LogReduction.AVOID;
+									System.out.println("ROR E23 >>>>> " + exp.toFlattenString());
+								}
+							}
+						}
+					}
+				}
+
+			}
+
 		}
         /*
             ROR E-Rule 17
@@ -203,7 +246,7 @@ public class ROR extends Arithmetic_OP {
         }
 
 
-		return e_rule_13 || e_rule_17 || e_rule_20;
+		return e_rule_13 || e_rule_17 || e_rule_20 || e_rule_23;
 	}
 
 	private void primitiveRORMutantGen(BinaryExpression exp, int op) {
