@@ -15,35 +15,39 @@ import java.util.List;
 
 public class DummyExecution {
 	public static void main(String[] args) {
-	    String session = "/session2";
-	    String FILEPATH = "/home/pedro/Documents/Shared/GitHub/muJava-AUM/mujava/examples" + session;
+	    String session = "/session5";
+	    String FILEPATH = "/home/pedro/Documents/Shared/GitHub/muJava-AUM/examples" + session;
 		try {
 			Debug.setDebugLevel(Debug.DETAILED_LEVEL);
 			ExpressionAnalyzer.DbgLevel = ExpressionAnalyzer.DebugLevel.BASIC;
 			MutationSystem.setJMutationStructureFromFilePath(FILEPATH);
 			MutationSystem.recordInheritanceRelation();
-			MutationSystem.ORIGINAL_PATH = "/home/pedro/Documents/Shared/GitHub/muJava-AUM/mujava/examples" + session +
-					"/result/ERule13Example/original";
+			MutationSystem.ORIGINAL_PATH = FILEPATH + "/result/ERule13Example/original";
 			MutationSystem.CLASS_NAME = "ERule13Example";
-			MutationSystem.TRADITIONAL_MUTANT_PATH = "/home/pedro/Documents/Shared/GitHub/muJava-AUM/mujava/" +
-					"examples" + session + "/result/ERule13Example/traditional_mutants";
+			MutationSystem.TRADITIONAL_MUTANT_PATH =  FILEPATH + "/result/ERule13Example/traditional_mutants";
 
 			File original = new File(FILEPATH + "/src/ERule13Example.java");
 			ArrayList<String> selected = new ArrayList<>();
 			selected.add("ROR");
-			TraditionalMutantsGenerator tmg = new TraditionalMutantsGenerator(original, new String[]{"ROR"}, selected);
-			tmg.makeMutants();
+//			TraditionalMutantsGenerator tmg = new TraditionalMutantsGenerator(original, new String[]{"ROR"}, selected);
+//			tmg.makeMutants();
+            AllMutantsGenerator amg = new AllMutantsGenerator(original, new String[]{"JSD"}, new String[0]);
+            amg.makeMutants();
 		}
 		catch (FileNotFoundException e) {
-			System.out.println(e.getMessage());
-			System.out.println();
+			System.out.println("Error! " + FILEPATH  + "\nFile not found!");
+			e.printStackTrace();
 
 		}
 		catch (URISyntaxException e) {
+			System.out.println("Error! Wrong URI!");
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		catch (Exception e) {
+			System.out.println("Error!");
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 }

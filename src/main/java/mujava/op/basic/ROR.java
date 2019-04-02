@@ -81,6 +81,7 @@ public class ROR extends Arithmetic_OP {
 
 		boolean e_rule_13 = false;
 		boolean e_rule_17 = false;
+		boolean e_rule_20 = false;
 
 		/*
 			ROR E-Rule 13
@@ -95,16 +96,7 @@ public class ROR extends Arithmetic_OP {
 
 			>>>>>
 		*/
-		/*    ERULE 20
-		 *   "term = if (v1 op1 v2) { v1 := v2 };
-		 *   transformations = {
-		 *     ROR(op1) = op2
-		 *   }
-		 *   constraints = {
-		 *      v1 and v2 hold a primitive data type,
-		 *      op1 ∈ {<} and op2 ∈ {<=} or op1 ∈ {>} and op2 ∈ {>=},
-		 *   }"
-		 */
+
 		ExpressionAnalyzer aexp = new ExpressionAnalyzer(exp, this.getEnvironment());
 		if (aexp.isInsideIf()) {
 			if (aexp.containsZeroLiteral() && (aexp.containsLengthMethodCall() &&
@@ -138,11 +130,42 @@ public class ROR extends Arithmetic_OP {
 						break;
 				}
 			}
+
+        /*    ERULE 20
+		 *   "term = if (v1 op1 v2) { v1 := v2 };
+		 *   transformations = {
+		 *     ROR(op1) = op2
+		 *   }
+		 *   constraints = {
+		 *      v1 and v2 hold a primitive data type,
+		 *      op1 ∈ {<} and op2 ∈ {<=} or op1 ∈ {>} and op2 ∈ {>=},
+		 *   }"
+		 */
+			//TODO: test for activation
 			else if (aexp.getRight() instanceof Variable && (aexp.getLeft() instanceof Variable)) {
 				IfStatement parent = (IfStatement) exp.getParent();
 				StatementList statementList = parent.getStatements();
 				for (int index = 0; index < statementList.size(); ++index) {
 					Statement statement = statementList.get(index);
+					if (statement instanceof ExpressionStatement) {
+						ExpressionStatement es = (ExpressionStatement) statement;
+						if (es.getExpression() instanceof AssignmentExpression) {
+							AssignmentExpression ase = (AssignmentExpression) es.getExpression();
+							if ((ase.getRight() instanceof Variable) && (ase.getLeft() instanceof Variable)) {
+							    if (ase.getRight().equals(aexp.getRight()) && ase.getLeft().equals(aexp.getLeft())) {
+									ExpressionAnalyzer.BinaryOperator top2 = ExpressionAnalyzer.translateFromBinaryExpression(op2);
+									if ((aexp.getRootOperator() == ExpressionAnalyzer.BinaryOperator.LESSER &&
+										top2 == ExpressionAnalyzer.BinaryOperator.LESSEREQUAL) ||
+											(aexp.getRootOperator() == ExpressionAnalyzer.BinaryOperator.GREATER) &&
+										top2 == ExpressionAnalyzer.BinaryOperator.GREATEREQUAL) {
+										//ACTIVATE RULE
+										System.out.println("ROR-E20");
+										e_rule_20 = LogReduction.AVOID;
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 		}
@@ -180,7 +203,7 @@ public class ROR extends Arithmetic_OP {
         }
 
 
-		return e_rule_13 || e_rule_17;
+		return e_rule_13 || e_rule_17 || e_rule_20;
 	}
 
 	private void primitiveRORMutantGen(BinaryExpression exp, int op) {

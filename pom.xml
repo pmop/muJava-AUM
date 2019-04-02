@@ -4,6 +4,7 @@
 	<groupId>aum</groupId>
 	<artifactId>muJava</artifactId>
     <packaging>jar</packaging>
+	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -59,6 +60,12 @@
 			<groupId>com.sun</groupId>
 			<artifactId>tools</artifactId>
 			<version>1.7.0.13</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 </project>
