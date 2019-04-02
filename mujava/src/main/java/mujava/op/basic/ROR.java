@@ -76,11 +76,6 @@ public class ROR extends Arithmetic_OP {
 		}
 	}
 
-	private boolean isEquivalent() {
-		boolean isEq = false;
-		return isEq;
-	}
-
 	boolean isEquivalent(BinaryExpression exp, int op1, int op2) {
 		Debug.println("Checking if is equivalent.");
 
@@ -100,7 +95,57 @@ public class ROR extends Arithmetic_OP {
 
 			>>>>>
 		*/
-
+		/*    ERULE 20
+		 *   "term = if (v1 op1 v2) { v1 := v2 };
+		 *   transformations = {
+		 *     ROR(op1) = op2
+		 *   }
+		 *   constraints = {
+		 *      v1 and v2 hold a primitive data type,
+		 *      op1 ∈ {<} and op2 ∈ {<=} or op1 ∈ {>} and op2 ∈ {>=},
+		 *   }"
+		 */
+		ExpressionAnalyzer aexp = new ExpressionAnalyzer(exp, this.getEnvironment());
+		if (aexp.isInsideIf()) {
+			if (aexp.containsZeroLiteral() && (aexp.containsLengthMethodCall() &&
+					(aexp.containsString() || aexp.containsArray())) ){
+				switch (aexp.getRootOperator()) {
+					case DIFFERENT:
+						if (op2 == BinaryExpression.LESS || (op2 == BinaryExpression.GREATER)) {
+							e_rule_13 = LogReduction.AVOID;
+							System.out.println("E-Rule 13 >>>> " + exp.toString() + " op2: " + ExpressionAnalyzer.translateFromBinaryExpression(op2));
+						}
+						break;
+					case GREATER:
+						if (op2 == BinaryExpression.NOTEQUAL) {
+							e_rule_13 = LogReduction.AVOID;
+							System.out.println("E-Rule 13 >>>> " + exp.toString() + " op2: " + ExpressionAnalyzer.translateFromBinaryExpression(op2));
+						}
+						break;
+					case LESSER:
+						if (op2 == BinaryExpression.NOTEQUAL) {
+							e_rule_13 = LogReduction.AVOID;
+							System.out.println("E-Rule 13 >>>> " + exp.toString() + " op2: " + ExpressionAnalyzer.translateFromBinaryExpression(op2));
+						}
+						break;
+					case EQUALS:
+						if (op2 == BinaryExpression.LESSEQUAL) {
+							e_rule_13 = LogReduction.AVOID;
+							System.out.println("E-Rule 13 >>>> " + exp.toString() + " op2: " + ExpressionAnalyzer.translateFromBinaryExpression(op2));
+						}
+						break;
+					default:
+						break;
+				}
+			}
+			else if (aexp.getRight() instanceof Variable && (aexp.getLeft() instanceof Variable)) {
+				IfStatement parent = (IfStatement) exp.getParent();
+				StatementList statementList = parent.getStatements();
+				for (int index = 0; index < statementList.size(); ++index) {
+					Statement statement = statementList.get(index);
+				}
+			}
+		}
         /*
             ROR E-Rule 17
             term = for (int v1 := 0; v1 op1 vArray.length; v1++){ ... }
@@ -112,38 +157,6 @@ public class ROR extends Arithmetic_OP {
                There is no definition of v1 within the for body
             }
          */
-        ExpressionAnalyzer aexp = new ExpressionAnalyzer(exp, this.getEnvironment());
-        if (aexp.isInsideIf() && aexp.containsZeroLiteral() && (aexp.containsLengthMethodCall() &&
-                (aexp.containsString() || aexp.containsArray())) ) {
-            switch (aexp.getRootOperator()) {
-                case DIFFERENT:
-                    if (op2 == BinaryExpression.LESS || (op2 == BinaryExpression.GREATER)) {
-                    	e_rule_13 = LogReduction.AVOID;
-                    	System.out.println("E-Rule 13 >>>> " + exp.toString() + " op2: " + ExpressionAnalyzer.translateFromBinaryExpression(op2));
-					}
-                    break;
-                case GREATER:
-					if (op2 == BinaryExpression.NOTEQUAL) {
-						e_rule_13 = LogReduction.AVOID;
-						System.out.println("E-Rule 13 >>>> " + exp.toString() + " op2: " + ExpressionAnalyzer.translateFromBinaryExpression(op2));
-					}
-                    break;
-                case LESSER:
-					if (op2 == BinaryExpression.NOTEQUAL) {
-						e_rule_13 = LogReduction.AVOID;
-						System.out.println("E-Rule 13 >>>> " + exp.toString() + " op2: " + ExpressionAnalyzer.translateFromBinaryExpression(op2));
-					}
-                    break;
-                case EQUALS:
-					if (op2 == BinaryExpression.LESSEQUAL) {
-						e_rule_13 = LogReduction.AVOID;
-						System.out.println("E-Rule 13 >>>> " + exp.toString() + " op2: " + ExpressionAnalyzer.translateFromBinaryExpression(op2));
-					}
-                    break;
-                default:
-                    break;
-            }
-        }
         else if (aexp.isInsideFor() && aexp.isForIteratorStartsAtZero() &&
                 aexp.isForIteratorIncrements() && aexp.containsArray() && aexp.containsLengthMethodCall()) {
             //TODO: check if v1 is 'defined within for statement block' according to ROR E-Rule 17
@@ -165,6 +178,7 @@ public class ROR extends Arithmetic_OP {
             }
 
         }
+
 
 		return e_rule_13 || e_rule_17;
 	}

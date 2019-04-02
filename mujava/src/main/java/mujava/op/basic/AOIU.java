@@ -119,9 +119,10 @@ public class AOIU extends Arithmetic_OP {
 		// Lin added to generate mutants for logical expressions
 		// e.g.
 		// a < b  => -a < b
-		else if ((p.getOperator() == BinaryExpression.GREATER) || (p.getOperator() == BinaryExpression.GREATEREQUAL)
+		else if (((p.getOperator() == BinaryExpression.GREATER) || (p.getOperator() == BinaryExpression.GREATEREQUAL)
 				|| (p.getOperator() == BinaryExpression.LESSEQUAL) || (p.getOperator() == BinaryExpression.EQUAL)
-				|| (p.getOperator() == BinaryExpression.NOTEQUAL) || (p.getOperator() == BinaryExpression.LESS)) {
+				|| (p.getOperator() == BinaryExpression.NOTEQUAL) || (p.getOperator() == BinaryExpression.LESS))
+				&& !isEquivalent(p)) {
 			Expression e1 = p.getLeft();
 			Expression e2 = p.getRight();
 				super.visit(e1);
@@ -202,7 +203,7 @@ public class AOIU extends Arithmetic_OP {
 		}
 	}
 
-	boolean isEquivalent(BinaryExpression exp, boolean aoiuNegative) {
+	boolean isEquivalent(BinaryExpression exp) {
 		boolean aoiu15 = false;
 		/*
 		AOIU 15
@@ -215,19 +216,18 @@ public class AOIU extends Arithmetic_OP {
 			}"
 		 */
         ExpressionAnalyzer aexp = new ExpressionAnalyzer(exp, this.getEnvironment());
-		if (aoiuNegative && aexp.containsZeroLiteral() && aexp.isInsideIf() ) {
+		if (aexp.containsZeroLiteral() && aexp.isInsideIf()) {
 			aoiu15 = LogReduction.AVOID;
 			switch (aexp.getRootOperator()) {
 				case EQUALS:
-					break;
 				case DIFFERENT:
+					System.out.println("AOIU E15 >>>> " + exp.toFlattenString());
 					break;
-                default:
+				default:
                     aoiu15 = false;
                     break;
 			}
 		}
-
 		return aoiu15;
 	}
 
