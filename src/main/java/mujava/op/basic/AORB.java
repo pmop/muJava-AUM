@@ -199,7 +199,7 @@ public class AORB extends Arithmetic_OP {
 		return false;
 	}
 
-     static public boolean isEquivalent(BinaryExpression binaryExpression) {
+     public boolean isEquivalent(BinaryExpression binaryExpression) {
 		 boolean erule21 = false;
       /* E-Rule 21
         "term = StringBuilder v1 = new StringBuilder(v2 op1 2);
@@ -225,16 +225,21 @@ public class AORB extends Arithmetic_OP {
 				 ExpressionList allocationExpressionList = allocationExpression.getArguments();
 				 if (allocationExpressionList.get(0) instanceof BinaryExpression) {
 					 BinaryExpression mainBinaryExpression = (BinaryExpression) allocationExpressionList.get(0);
-					 switch (mainBinaryExpression.getOperator()) {
-						 case BinaryExpression.TIMES:
-						 case BinaryExpression.DIVIDE:
-						 case BinaryExpression.MOD:
-						 case BinaryExpression.PLUS:
-						 case BinaryExpression.MINUS:
-						     erule21 = LogReduction.AVOID;
-						     System.out.println("[AVOID MUTANT RULE ACTIVATED] AORB->ERULE21 >>>>> "
-									 + allocationExpression.toFlattenString());
-							 break;
+					 ExpressionAnalyzer analyzer = new ExpressionAnalyzer(mainBinaryExpression,
+							 this.getEnvironment());
+					 if (!analyzer.containsString())
+					 {
+						 switch (mainBinaryExpression.getOperator()) {
+							 case BinaryExpression.TIMES:
+							 case BinaryExpression.DIVIDE:
+							 case BinaryExpression.MOD:
+							 case BinaryExpression.PLUS:
+							 case BinaryExpression.MINUS:
+								 erule21 = LogReduction.AVOID;
+								 System.out.println("[TOUCHDOWN] AORB->ERULE21 >>>>> "
+										 + allocationExpression.toFlattenString());
+								 break;
+						 }
 					 }
 				 }
 			 }
