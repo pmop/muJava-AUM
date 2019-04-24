@@ -149,6 +149,7 @@ public abstract class MutantsGenerator {
 				out.close();
 			} catch (IOException e) {
 				System.err.println("fails to create " + outfile);
+				System.err.println("Reason:" + e.getMessage());
 			} catch (ParseTreeException e) {
 				System.err.println("errors during printing " + outfile);
 				e.printStackTrace();
