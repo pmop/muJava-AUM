@@ -139,6 +139,7 @@ public class AOIU extends Arithmetic_OP {
 		// Right Expression : a = b = -c;
 		// Wrong Expression : a = -b = c;
 		// Ignore left expression
+		if (isEquivalent(p)) return;
 		Expression rexp = p.getRight();
 		rexp.accept(this);
 	}
@@ -203,8 +204,28 @@ public class AOIU extends Arithmetic_OP {
 		}
 	}
 
+	boolean isEquivalent(AssignmentExpression exp) {
+		boolean aoiu12 = false;
+        /*
+		AOIU 12
+        "term = v1 %= v2;
+        transformations = {
+          AOIU(v2) = -v2
+        }
+        constraints = {
+
+        }"
+		*/
+        if (exp.getOperator() == AssignmentExpression.MOD) {
+			aoiu12 = LogReduction.AVOID;
+			System.out.println("[TOUCHDOWN] ERULE AOIU12 >>>>> " + exp.toFlattenString());
+		}
+		return aoiu12;
+	}
+
 	boolean isEquivalent(BinaryExpression exp) {
 		boolean aoiu15 = false;
+		boolean aoiu12 = false;
 		/*
 		AOIU 15
 		"term = if(exp op 0){...}
@@ -227,6 +248,19 @@ public class AOIU extends Arithmetic_OP {
                     aoiu15 = false;
                     break;
 			}
+		}
+        /*
+		AOIU 12
+        "term = v1 %= v2;
+        transformations = {
+          AOIU(v2) = -v2
+        }
+        constraints = {
+
+        }"
+		*/
+        if (aexp.getRootOperator().equals(ExpressionAnalyzer.BinaryOperator.MOD)) {
+
 		}
 		return aoiu15;
 	}

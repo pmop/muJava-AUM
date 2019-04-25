@@ -15,7 +15,7 @@ import java.util.List;
 
 public class DummyExecution {
 	public static void main(String[] args) {
-	    String session = "/session2";
+	    String session = "/aoiu12dummy";
 	    String FILEPATH = "/home/pedro/Documents/Shared/GitHub/muJava-AUM/examples" + session;
 		String CLASSNAME = "Example";
 		try {
@@ -33,7 +33,7 @@ public class DummyExecution {
 			selected.add("ROR");
 //			TraditionalMutantsGenerator tmg = new TraditionalMutantsGenerator(original, new String[]{"ROR"}, selected);
 //			tmg.makeMutants();
-            AllMutantsGenerator amg = new AllMutantsGenerator(original, new String[0], new String[]{"AORB"});
+            AllMutantsGenerator amg = new AllMutantsGenerator(original, new String[0], new String[]{"AOIU"});
             amg.makeMutants();
 		}
 		catch (FileNotFoundException e) {

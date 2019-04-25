@@ -289,6 +289,12 @@ public class ExpressionAnalyzer {
                 return "<=";
             }
         },
+        MOD {
+            @Override
+            public String toString() {
+                return "%";
+            }
+        },
         NOTIMPLEMENTED {
             @Override
             public String toString() {
@@ -323,6 +329,9 @@ public class ExpressionAnalyzer {
                 break;
             case BinaryExpression.LESSEQUAL:
                 op = BinaryOperator.LESSEREQUAL;
+                break;
+            case BinaryExpression.MOD:
+                op = BinaryOperator.MOD;
                 break;
             default:
                 op = BinaryOperator.NOTIMPLEMENTED;
