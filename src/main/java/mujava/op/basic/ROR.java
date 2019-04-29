@@ -525,6 +525,65 @@ public class ROR extends Arithmetic_OP {
                There is no definition of v1 within the for body
             }
          */
+        //ForStatement seems to not store information about declared variables in initiation expression
+		//So we'll have to trust that the variable being incremented is the one we're looking for
+        Object[] forStatementContents = forStatement.getContents();
+        try {
+            //Check if initializer is int
+			TypeName typeName = (TypeName) forStatementContents[0];
+			boolean hasForStatementSpecs = false;
+			if (typeName.getName() == "int") {
+				// Here, we look into for increment expression list for an unary increment
+				// on the variable we're interested into
+				ExpressionList expressionList = (ExpressionList) forStatementContents[4];
+				// Unary increment expression
+				UnaryExpression incremeterExpression = null;
+				for (int i = 0; i < expressionList.size(); i++) {
+					if (expressionList.get(i) instanceof UnaryExpression) {
+						incremeterExpression = (UnaryExpression) expressionList.get(i);
+					}
+				}
+				if (incremeterExpression != null) {
+//					Variable unaryIncrementVariable =
+                    if (incremeterExpression.getContents()[0] instanceof Variable) {
+                    	Variable unaryIncrementVariable = (Variable) incremeterExpression.getContents()[0];
+                    	BinaryExpression forConditionExpression = (BinaryExpression) forStatementContents[3];
+                    	Variable binaryExpressionVariable = (Variable) forConditionExpression.getContents()[0];
+                    	boolean hasFieldAccess = false;
+                    	boolean hasSizeMethodCall = false;
+                    	if (forConditionExpression.getLeft() instanceof FieldAccess ){
+                    		FieldAccess fa = (FieldAccess) forConditionExpression.getLeft();
+                    		if (fa.getName().equals("length") || fa.getName().equals("size")){hasFieldAccess = true;}
+						}
+						if (forConditionExpression.getRight() instanceof FieldAccess ){
+							FieldAccess fa = (FieldAccess) forConditionExpression.getRight();
+							if (fa.getName().equals("length") || fa.getName().equals("size")){hasFieldAccess = true;}
+						}
+						if (forConditionExpression.getLeft() instanceof MethodCall) {
+							MethodCall mc = (MethodCall) forConditionExpression.getRight();
+							if (mc.getName().equals("length") || mc.getName().equals("size")){hasSizeMethodCall = true;}
+						}
+                        if (forConditionExpression.getLeft() instanceof MethodCall) {
+							MethodCall mc = (MethodCall) forConditionExpression.getLeft();
+							if (mc.getName().equals("length") || mc.getName().equals("size")){hasSizeMethodCall = true;}
+						}
+
+                    	if (unaryIncrementVariable.equals(binaryExpressionVariable)
+								&& (hasFieldAccess || hasSizeMethodCall)) {
+							hasForStatementSpecs = true;
+						}
+					}
+				}
+			}
+			// If has e-rule specifications, we'll continue checking inside for loop for v1 use
+			if (hasForStatementSpecs) {
+//				ExpressionList forStatementBlock = forStatement.
+				//Here, we have to look into whatever changes v1
+				//Possible solution is to not trigger the rule whenever v1 is used
+                StatementList statementList = forStatement.getStatements();
+			}
+		} catch (ClassCastException e) {
+		}
         Expression condition = forStatement.getCondition();
 		return e_rule_17;
 	}
