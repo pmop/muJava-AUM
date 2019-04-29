@@ -4,40 +4,58 @@ import mujava.AllMutantsGenerator;
 import mujava.MutationSystem;
 import mujava.TraditionalMutantsGenerator;
 import mujava.op.basic.ExpressionAnalyzer;
+import mujava.op.util.CodeChangeLog;
 import mujava.util.Debug;
-import openjava.ptree.Expression;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class DummyExecution {
-	public static void main(String[] args) {
-	    String session = "/aoiu12dummy";
-	    String FILEPATH = "/home/pedro/Documents/Shared/GitHub/muJava-AUM/examples" + session;
-		String CLASSNAME = "Example";
-		try {
-			Debug.setDebugLevel(Debug.DETAILED_LEVEL);
-			ExpressionAnalyzer.DbgLevel = ExpressionAnalyzer.DebugLevel.NONE;
-			MutationSystem.setJMutationStructureFromFilePath(FILEPATH);
-			MutationSystem.recordInheritanceRelation();
-			MutationSystem.ORIGINAL_PATH = FILEPATH + "/result/" + CLASSNAME + "/original";
-			MutationSystem.CLASS_NAME = CLASSNAME;
-			MutationSystem.TRADITIONAL_MUTANT_PATH =  FILEPATH + "/result/"+ CLASSNAME + "/traditional_mutants";
-			MutationSystem.CLASS_MUTANT_PATH = FILEPATH + "/result/"+ CLASSNAME +"/class_mutants";
+	/**
+    * Set path to folder containing code that will be mutated
+    * @param path
+    */
+	private static void configure(String path, String classname) throws Exception {
+		char[] sanitizedPath = new char[path.length()];
+		for (int i = 0; i < path.length(); ++i) {
+			if (path.charAt(i) == '\\') sanitizedPath[i] = '/';
+			else sanitizedPath[i] = path.charAt(i);
+		}
+		path = new String(sanitizedPath);
+		Debug.setDebugLevel(Debug.DETAILED_LEVEL);
+		ExpressionAnalyzer.DbgLevel = ExpressionAnalyzer.DebugLevel.NONE;
+		MutationSystem.setJMutationStructureFromFilePath(path);
+		MutationSystem.recordInheritanceRelation();
+		MutationSystem.ORIGINAL_PATH = path + "/result/" + classname + "/original";
+		MutationSystem.CLASS_NAME = classname;
+		MutationSystem.TRADITIONAL_MUTANT_PATH =  path + "/result/"+ classname + "/traditional_mutants";
+		MutationSystem.CLASS_MUTANT_PATH = path + "/result/"+ classname +"/class_mutants";
+		MutationSystem.MUTANT_PATH =  MutationSystem.TRADITIONAL_MUTANT_PATH;
+		CodeChangeLog.openLogFile();
+	}
 
-			File original = new File(FILEPATH + "/src/"+ CLASSNAME + ".java");
-			ArrayList<String> selected = new ArrayList<>();
-			selected.add("ROR");
-//			TraditionalMutantsGenerator tmg = new TraditionalMutantsGenerator(original, new String[]{"ROR"}, selected);
-//			tmg.makeMutants();
-            AllMutantsGenerator amg = new AllMutantsGenerator(original, new String[0], new String[]{"AOIU"});
+	public static void main(String[] args) {
+		String path;
+		String className = "Example";
+
+		if ((args.length == 1) || (args.length == 2)) {
+			path = args[0];
+			if (args.length == 2) {
+				className = args[1];
+			}
+		}  else {
+			System.out.println("Invalid argument.");
+		    return;
+		}
+		try {
+            configure(path, className);
+			File original = new File(path + "/src/"+ className + ".java");
+            AllMutantsGenerator amg = new AllMutantsGenerator(original, new String[0], new String[]{"ROR"});
             amg.makeMutants();
 		}
 		catch (FileNotFoundException e) {
-			System.out.println("Error! " + FILEPATH  + "\nFile not found!");
+			System.out.println("Error! " + path  + "\nFile not found!");
 			e.printStackTrace();
 
 		}
