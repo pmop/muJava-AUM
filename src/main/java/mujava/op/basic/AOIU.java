@@ -43,9 +43,17 @@ import static mujava.op.basic.ExpressionAnalyzer.BinaryOperator.EQUALS;
 
 public class AOIU extends Arithmetic_OP {
 	// boolean aor_flag = false;
+	private java.util.List<String> allOperatorsSelected;
 
 	public AOIU(FileEnvironment file_env, ClassDeclaration cdecl, CompilationUnit comp_unit) {
 		super(file_env, comp_unit);
+		allOperatorsSelected = new java.util.ArrayList<>();
+	}
+
+    public AOIU(FileEnvironment file_env, ClassDeclaration cdecl
+			, CompilationUnit comp_unit, java.util.List<String> allOperatorsSelected) {
+		this(file_env,cdecl,comp_unit);
+		this.allOperatorsSelected = allOperatorsSelected;
 	}
 
 	/**
@@ -264,5 +272,15 @@ public class AOIU extends Arithmetic_OP {
 		}
 		return aoiu15;
 	}
-
+	public boolean isDuplicated (AssignmentExpression assignmentExpression) {
+		boolean d_aoiu_43 = false;
+		if (assignmentExpression.getOperator() == AssignmentExpression.ADD) {
+			if (allOperatorsSelected.contains("ASRS")) {
+				String desc = assignmentExpression.toFlattenString();
+				logReduction("AOIU", "ASRS", desc);
+				d_aoiu_43 = LogReduction.AVOID;
+			}
+		}
+		return d_aoiu_43;
+	}
 }
